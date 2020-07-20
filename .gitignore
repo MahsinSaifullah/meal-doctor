@@ -1,0 +1,15 @@
+node_modules/
+config/default.json
+config/googleVisionApi.json
+client/.expo/*
+client/node_modules/**/*
+client/npm-debug.*
+client/*.jks
+client/*.jks
+client/*.p8
+client/*.p12
+client/*.key
+client/*.mobileprovision
+client/*.orig.*
+client/web-build/
+.DS_Store
