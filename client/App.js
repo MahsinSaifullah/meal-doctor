@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { Ionicons } from '@expo/vector-icons';

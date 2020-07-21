@@ -8,10 +8,11 @@ const screenWeight = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
 	screenContent: {
-		flex: 1,
+		height: '100%',
 		backgroundColor: Colors.bgGrey,
 	},
 	dateDisplayContainer: {
+		flex: 1,
 		flexDirection: 'row',
 		marginVertical: 15,
 		marginHorizontal: '10%',
@@ -24,12 +25,18 @@ const styles = StyleSheet.create({
 	},
 	dateText: {
 		color: Colors.primary,
-		fontFamily: Fonts.secondaryTitle,
-		fontSize: screenHeight >= 700 ? 25 : 22,
+		fontFamily: Fonts.mainTitleFont,
+		fontSize: screenHeight >= 700 ? 32 : 26,
 	},
 	nutrientDisplayContainer: {
+		flex: 1,
 		width: '100%',
 		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	foodLogDisplayContainer: {
+		flex: 1,
+		width: '100%',
 		alignItems: 'center',
 	},
 });
