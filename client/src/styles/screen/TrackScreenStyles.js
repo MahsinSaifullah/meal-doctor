@@ -1,7 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
+
+const screenHeight = Dimensions.get('window').height;
+const screenWeight = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
 	screenContent: {
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
 	dateText: {
 		color: Colors.primary,
 		fontFamily: Fonts.secondaryTitle,
-		fontSize: 25,
+		fontSize: screenHeight >= 700 ? 25 : 22,
 	},
 	nutrientDisplayContainer: {
 		width: '100%',

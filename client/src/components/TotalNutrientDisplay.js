@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Card, CardItem, Body, Text } from 'native-base';
+import { View, Text } from 'react-native';
+import {} from 'native-base';
 
 import styles from '../styles/component/TotalNutrientDisplayStyles';
 
@@ -19,6 +19,44 @@ const TotalNutrientDisplay = ({ totalCalories, goalCalories }) => {
 						<Text style={styles.goalText}>Goal: </Text>
 						{goalCalories}
 					</Text>
+				</View>
+			</View>
+			<View style={styles.totalNutrientCardContainer}>
+				<View style={styles.totalNutrientValueContainer}>
+					<View>
+						<Text style={styles.nutrientText}>Carb</Text>
+					</View>
+					<View style={styles.totalNutrientParcentageContainer}>
+						<Text style={styles.nutrientParcentage}>20%</Text>
+						<Text style={styles.nutrientGram}>10g</Text>
+					</View>
+				</View>
+				<View style={styles.totalNutrientValueContainer}>
+					<View>
+						<Text style={styles.nutrientText}>Protein</Text>
+					</View>
+					<View style={styles.totalNutrientParcentageContainer}>
+						<Text style={styles.nutrientParcentage}>20%</Text>
+						<Text style={styles.nutrientGram}>10g</Text>
+					</View>
+				</View>
+				<View style={styles.totalNutrientValueContainer}>
+					<View>
+						<Text style={styles.nutrientText}>Fat</Text>
+					</View>
+					<View style={styles.totalNutrientParcentageContainer}>
+						<Text style={styles.nutrientParcentage}>20%</Text>
+						<Text style={styles.nutrientGram}>10g</Text>
+					</View>
+				</View>
+				<View style={styles.totalNutrientValueContainer}>
+					<View>
+						<Text style={styles.nutrientText}>Fiber</Text>
+					</View>
+					<View style={styles.totalNutrientParcentageContainer}>
+						<Text style={styles.nutrientParcentage}>20%</Text>
+						<Text style={styles.nutrientGram}>10g</Text>
+					</View>
 				</View>
 			</View>
 		</View>
