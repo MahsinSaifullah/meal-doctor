@@ -9,7 +9,7 @@ const screenWeight = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 	screenContent: {
 		height: '100%',
-		backgroundColor: Colors.bgGrey,
+		backgroundColor: Colors.bgWhite,
 	},
 	dateDisplayContainer: {
 		flex: 1,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	},
 	dateText: {
 		color: Colors.primary,
-		fontFamily: Fonts.mainTitleFont,
+		fontFamily: Fonts.secondaryTitle,
 		fontSize: screenHeight >= 700 ? 32 : 26,
 	},
 	nutrientDisplayContainer: {

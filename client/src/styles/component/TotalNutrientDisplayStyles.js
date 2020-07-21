@@ -10,14 +10,14 @@ const styles = StyleSheet.create({
 	componentContainer: {
 		height: screenHeight >= 700 ? '50%' : '45%',
 		width: '100%',
-		marginTop: 15,
+		marginTop: 12,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
 	totalCalorieCardContainer: {
 		height: screenHeight >= 700 ? 180 : 150,
 		width: screenHeight >= 700 ? 180 : 150,
-		backgroundColor: Colors.bgGrey,
+		backgroundColor: Colors.bgWhite,
 		borderWidth: 1,
 		borderRadius: screenHeight >= 700 ? 90 : 75,
 		borderColor: Colors.accentLight,
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
 	nutrientParcentage: {
 		fontFamily: Fonts.subtitle,
 		fontSize: screenHeight >= 700 ? 20 : 18,
-		color: Colors.accent,
+		color: Colors.bgWhite,
 	},
 	nutrientGram: {
 		fontFamily: Fonts.subtitle,
 		fontSize: 14,
-		color: Colors.accentLight,
+		color: Colors.bgWhite,
 	},
 	totalNutrientParcentageContainer: {
 		width: screenHeight >= 700 ? 80 : 72,
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		borderColor: Colors.accentLight,
+		borderColor: 'black',
+		backgroundColor: Colors.primary,
 	},
 });
 

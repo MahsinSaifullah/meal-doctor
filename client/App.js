@@ -5,11 +5,13 @@ import { AppLoading } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
+import { Asset } from 'expo-asset';
 
 import DrawerNavigator from './src/navigation/DrawerNavigator';
 import store from './src/store/store';
 
-const fetchFonts = () => {
+const fetchFonts = async () => {
+	await Asset.loadAsync([require('./assets/bgImage.jpg')]);
 	return Font.loadAsync({
 		Roboto: require('native-base/Fonts/Roboto.ttf'),
 		Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
