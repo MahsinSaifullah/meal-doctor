@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
 		marginHorizontal: '10%',
 		alignItems: 'center',
 		width: '100%',
+		height: '5%',
 	},
 	dateTextContainer: {
 		marginHorizontal: 20,
@@ -22,6 +23,11 @@ const styles = StyleSheet.create({
 		color: Colors.primary,
 		fontFamily: Fonts.secondaryTitle,
 		fontSize: 25,
+	},
+	nutrientDisplayContainer: {
+		width: '100%',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
 

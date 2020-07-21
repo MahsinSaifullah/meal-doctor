@@ -1,6 +1,6 @@
 export default {
 	primary: '#3fab81',
-	accent: '#3c366b',
+	accent: '#ab4f3f',
 	bgGrey: '#f7fafc',
 	bgWhite: '#fff',
 };
