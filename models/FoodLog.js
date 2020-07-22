@@ -71,6 +71,18 @@ const FoodLogSchema = mongoose.Schema({
 	fiberParcentage: {
 		type: Number,
 	},
+	salt: {
+		type: Number,
+	},
+	saltParcentage: {
+		type: Number,
+	},
+	cholestrol: {
+		type: Number,
+	},
+	cholestrolParcentage: {
+		type: Number,
+	},
 	isHealthy: {
 		type: Boolean,
 	},

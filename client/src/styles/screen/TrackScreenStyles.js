@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 20,
 	},
 	dateText: {
-		color: Colors.primary,
+		color: Colors.accent,
 		fontFamily: Fonts.secondaryTitle,
-		fontSize: screenHeight >= 700 ? 32 : 26,
+		fontSize: screenHeight >= 700 ? 30 : 24,
 	},
 	nutrientDisplayContainer: {
 		flex: 1,

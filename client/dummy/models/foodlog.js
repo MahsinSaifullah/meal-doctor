@@ -21,6 +21,10 @@ class Foodlogs {
 		satFatParcentage,
 		fiber,
 		fiberParcentage,
+		salt,
+		saltParcentage,
+		cholestrol,
+		cholestrolParcentage,
 		isHealthy,
 		dietLabels,
 		healthLabels,
@@ -47,6 +51,10 @@ class Foodlogs {
 		this.satFatParcentage = satFatParcentage;
 		this.fiber = fiber;
 		this.fiberParcentage = fiberParcentage;
+		this.salt = salt;
+		this.saltParcentage = saltParcentage;
+		this.cholestrol = cholestrol;
+		this.cholestrolParcentage = cholestrolParcentage;
 		this.isHealthy = isHealthy;
 		this.dietLabels = dietLabels;
 		this.healthLabels = healthLabels;

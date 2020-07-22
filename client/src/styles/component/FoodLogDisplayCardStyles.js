@@ -51,7 +51,11 @@ const styles = StyleSheet.create({
 		color: Colors.accent,
 	},
 	foodLogContainer: {
-		padding: 10,
+		width: '90%',
+		justifyContent: 'center',
+		alignItems: 'flex-start',
+		marginVertical: 15,
+		marginHorizontal: 12,
 	},
 });
 

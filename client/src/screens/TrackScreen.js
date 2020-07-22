@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	View,
 	TouchableOpacity,
@@ -7,16 +7,33 @@ import {
 } from 'react-native';
 import { Container, Content, Text } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 
 import styles from '../styles/screen/TrackScreenStyles';
 import Colors from '../constants/Colors';
 import TotalNutrientDisplay from '../components/TotalNutrientDisplay';
 import FoodLogDisplay from '../components/FoodLogDisplayCard';
+import { setDate } from '../store/actions/mealLogAction';
 
 const TrackScreen = () => {
+	const [showDatePicker, setShowDatePicker] = useState(false);
 	const dailyStat = useSelector((state) => state.mealLog.dailyState);
 	const user = useSelector((state) => state.auth.user);
+	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
+
+	const dispatch = useDispatch();
+
+	const handleCancelDatePicker = () => {
+		setShowDatePicker(false);
+	};
+
+	const handleConfirmDate = (date) => {
+		setShowDatePicker(false);
+		dispatch(setDate(date));
+	};
+
 	return (
 		<View style={styles.screenContent}>
 			<ImageBackground
@@ -25,12 +42,27 @@ const TrackScreen = () => {
 			>
 				<ScrollView>
 					<View style={styles.dateDisplayContainer}>
-						<TouchableOpacity>
-							<Ionicons name='md-calendar' size={23} color={Colors.primary} />
+						<TouchableOpacity
+							onPress={() => setShowDatePicker(true)}
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<Ionicons name='md-calendar' size={23} color={Colors.accent} />
+							<View style={styles.dateTextContainer}>
+								<Text style={styles.dateText}>
+									{moment(chosenDate).format('DD MMMM YYYY')}
+								</Text>
+								<DateTimePickerModal
+									isVisible={showDatePicker}
+									mode='date'
+									onCancel={handleCancelDatePicker}
+									onConfirm={handleConfirmDate}
+								/>
+							</View>
 						</TouchableOpacity>
-						<View style={styles.dateTextContainer}>
-							<Text style={styles.dateText}>21 Jul 2020</Text>
-						</View>
 					</View>
 					<View style={styles.nutrientDisplayContainer}>
 						<TotalNutrientDisplay
@@ -47,10 +79,10 @@ const TrackScreen = () => {
 						/>
 					</View>
 					<View style={styles.foodLogDisplayContainer}>
-						<FoodLogDisplay mealType='Breakfast' />
-						<FoodLogDisplay mealType='Lunch' />
-						<FoodLogDisplay mealType='Dinner' />
-						<FoodLogDisplay mealType='Snacks' />
+						<FoodLogDisplay mealType='breakfast' />
+						<FoodLogDisplay mealType='lunch' />
+						<FoodLogDisplay mealType='dinner' />
+						<FoodLogDisplay mealType='snacks' />
 					</View>
 				</ScrollView>
 			</ImageBackground>
