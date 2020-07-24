@@ -2,9 +2,8 @@ import { DAILYSTAT, FOODLOGS } from '../../../dummy/data/dummyData';
 import { SET_DATE } from '../types';
 
 const initialState = {
-	dailyState: DAILYSTAT,
+	dailyStats: DAILYSTAT,
 	foodLogs: FOODLOGS,
-	displayedFoodLogs: FOODLOGS,
 	chosenDate: Date.now(),
 };
 

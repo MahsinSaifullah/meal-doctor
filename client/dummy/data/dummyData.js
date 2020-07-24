@@ -172,5 +172,6 @@ export const FOODLOGS = [
 ];
 
 export const DAILYSTAT = [
-	new DailyStat(1, '21 Jul 2020', 100, 12, 25, 40, 60, 5, 10, 2.1, 5, 3),
+	new DailyStat(1, '24 July 2020', 100, 12, 25, 40, 60, 5, 10, 2.1, 5, 3),
+	new DailyStat(1, '31 July 2020', 3000, 12, 25, 40, 60, 5, 10, 2.1, 5, 3),
 ];

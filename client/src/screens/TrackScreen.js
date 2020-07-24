@@ -18,10 +18,20 @@ import FoodLogDisplay from '../components/FoodLogDisplayCard';
 import { setDate } from '../store/actions/mealLogAction';
 
 const TrackScreen = () => {
-	const [showDatePicker, setShowDatePicker] = useState(false);
-	const dailyStat = useSelector((state) => state.mealLog.dailyState);
-	const user = useSelector((state) => state.auth.user);
 	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
+	const [showDatePicker, setShowDatePicker] = useState(false);
+	const dailyStat = useSelector((state) =>
+		state.mealLog.dailyStats.find((dailyStat) => {
+			const isDateMatch = moment(dailyStat.date).isSame(
+				moment(chosenDate),
+				'date'
+			);
+
+			return isDateMatch;
+		})
+	);
+
+	const user = useSelector((state) => state.auth.user);
 
 	const dispatch = useDispatch();
 
@@ -66,16 +76,18 @@ const TrackScreen = () => {
 					</View>
 					<View style={styles.nutrientDisplayContainer}>
 						<TotalNutrientDisplay
-							totalCalories={dailyStat[0].totalCalories}
+							totalCalories={!dailyStat ? 0 : dailyStat.totalCalories}
 							goalCalories={user.goalCalories}
-							carb={dailyStat[0].totalCarb}
-							carbParcentage={dailyStat[0].totalCarbParcentage}
-							protein={dailyStat[0].totalProtein}
-							proteinParcentage={dailyStat[0].totalProteinParcentage}
-							fat={dailyStat[0].totalFat}
-							fatParcentage={dailyStat[0].totalFatParcentage}
-							fiber={dailyStat[0].totalFiber}
-							fiberParcentage={dailyStat[0].totalFiberParcentage}
+							carb={!dailyStat ? 0 : dailyStat.totalCarb}
+							carbParcentage={!dailyStat ? 0 : dailyStat.totalCarbParcentage}
+							protein={!dailyStat ? 0 : dailyStat.totalProtein}
+							proteinParcentage={
+								!dailyStat ? 0 : dailyStat.totalProteinParcentage
+							}
+							fat={!dailyStat ? 0 : dailyStat.totalFat}
+							fatParcentage={!dailyStat ? 0 : dailyStat.totalFatParcentage}
+							fiber={!dailyStat ? 0 : dailyStat.totalFiber}
+							fiberParcentage={!dailyStat ? 0 : dailyStat.totalFiberParcentage}
 						/>
 					</View>
 					<View style={styles.foodLogDisplayContainer}>

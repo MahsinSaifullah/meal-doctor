@@ -112,7 +112,7 @@ router.post(
 			// save food log to database
 			const foodlog = await newFoodLog.save();
 
-			const foodLogDate = moment(foodlog.date).format('MMMM Do YYYY');
+			const foodLogDate = moment(foodlog.date).format('DD MMMM YYYY');
 
 			let dailyStat = await DailyStat.findOne({
 				user: foodlog.user,

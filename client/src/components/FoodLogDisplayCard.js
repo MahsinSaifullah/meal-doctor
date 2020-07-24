@@ -2,15 +2,24 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { Button } from 'native-base';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 import styles from '../styles/component/FoodLogDisplayCardStyles';
 import FoodLogItem from './FoodLogItem';
 
 const FoodLogDisplayCard = ({ mealType }) => {
+	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
 	const displayedFoodLogs = useSelector((state) =>
-		state.mealLog.displayedFoodLogs.filter(
-			(foodLog) => foodLog.mealType === mealType
-		)
+		state.mealLog.foodLogs.filter((foodLog) => {
+			const isDateMatch = moment(foodLog.date).isSame(
+				moment(chosenDate),
+				'day'
+			);
+
+			const isMealTypeMatch = foodLog.mealType === mealType;
+
+			return isMealTypeMatch && isDateMatch;
+		})
 	);
 	return (
 		<View style={styles.componentContainer}>
