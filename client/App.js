@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { Asset } from 'expo-asset';
 
 import DrawerNavigator from './src/navigation/DrawerNavigator';
+import LandingStackNavigator from './src/navigation/LandingStackNavigator';
 import store from './src/store/store';
 
 const fetchFonts = async () => {
@@ -38,7 +39,8 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
-				<DrawerNavigator />
+				{/* <DrawerNavigator /> */}
+				<LandingStackNavigator />
 			</NavigationContainer>
 		</Provider>
 	);

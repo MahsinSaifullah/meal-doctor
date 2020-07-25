@@ -4,7 +4,6 @@ import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
 
 const screenHeight = Dimensions.get('window').height;
-const screenWeight = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
 	screenContent: {
