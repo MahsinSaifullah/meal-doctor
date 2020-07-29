@@ -15,6 +15,7 @@ const LandingStackNavigator = (props) => {
 	const token = useSelector((state) => state.auth.token);
 
 	useEffect(() => {
+		//checks for token in the async storage for authentication
 		const bootstrapAsync = async () => {
 			let tokenFromStorage;
 			try {

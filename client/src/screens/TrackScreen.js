@@ -28,7 +28,6 @@ const TrackScreen = ({ navigation }) => {
 	const token = useSelector((state) => state.auth.token);
 	const user = useSelector((state) => state.auth.user);
 	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
-	const currentMealType = useSelector((state) => state.mealLog.currentMealType);
 	const [modalType, setModalType] = useState('manualOrVision');
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [isSearchTypeModalOpen, setIsSearchTypeModalOpen] = useState(false);
@@ -46,6 +45,7 @@ const TrackScreen = ({ navigation }) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		//loads user from backend once the screen loads
 		const bootstrapAsync = async () => {
 			await dispatch(loadUser(token));
 		};
@@ -53,30 +53,38 @@ const TrackScreen = ({ navigation }) => {
 		bootstrapAsync();
 	}, []);
 
+	//handles the cancel button press on date picker modal
 	const handleCancelDatePicker = () => {
 		setShowDatePicker(false);
 	};
 
+	//handles selected date on date picker modal
 	const handleConfirmDate = (date) => {
 		setShowDatePicker(false);
 		dispatch(setDate(date));
 	};
 
+	// handle meal add button press
 	const handleMealAdd = (mealType) => {
 		dispatch(setCurrentMealType(mealType));
 		toggleModal();
 	};
 
+	// toggles the modal in track screen
 	const toggleModal = () => {
 		setIsSearchTypeModalOpen(!isSearchTypeModalOpen);
 		setModalType('manualOrVision');
 	};
 
+	// handles manual search button press on  manualOrVision modal
 	const handleOnManualSearch = () => {
 		setModalType('manualSearch');
 	};
+
+	// handles vision search button press on manualOrVision modal
 	const handleOnVisionSearch = () => {};
 
+	// handles search button press on manualSearch modal
 	const handleOnMealSearch = (mealName) => {
 		dispatch(searchMealCalories(mealName));
 		toggleModal();

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SEARCH_MEAL_CALORIES } from '../types';
 import ServerURL from '../../constants/ServerURL';
 
+// general meal calories detection
 export const searchMealCalories = (mealName) => async (dispatch) => {
 	const config = {
 		headers: {

@@ -15,12 +15,13 @@ import * as Animatable from 'react-native-animatable';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import validate from 'validate.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import styles from '../styles/screen/LoginScreenStyles';
 import Colors from '../constants/Colors';
 import { login, clearErrors } from '../store/actions/authAction';
 
+// contraints for validate.js
 const constraints = {
 	from: {
 		email: true,
@@ -39,10 +40,12 @@ const LoginScreen = ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 
+	// change text handler for email input
 	const handleEmailInputChange = (value) => {
 		setInputData({ ...inputData, email: value });
 	};
 
+	// change text handler for password input
 	const handlePasswordInputChange = (value) => {
 		setInputData({
 			...inputData,
@@ -50,6 +53,7 @@ const LoginScreen = ({ navigation }) => {
 		});
 	};
 
+	// toggle secure text entry attribute of password input
 	const toggleSecureTextEntry = () => {
 		setInputData({
 			...inputData,
@@ -57,6 +61,7 @@ const LoginScreen = ({ navigation }) => {
 		});
 	};
 
+	// applies validation on email input
 	const handleEndEditing = () => {
 		if (validate({ from: inputData.email }, constraints)) {
 			setInputData({ ...inputData, isEmailValid: false, showEmailAlert: true });
@@ -65,6 +70,7 @@ const LoginScreen = ({ navigation }) => {
 		}
 	};
 
+	// handles login button press
 	const handleOnSubmit = async () => {
 		const formData = {
 			email: inputData.email,
@@ -76,25 +82,24 @@ const LoginScreen = ({ navigation }) => {
 			setLoading(true);
 
 			try {
+				// after basic validation, dispatch login action to reducer
 				await dispatch(login(formData));
 			} catch (err) {
+				// any backend errors will be alerted to the user
 				Alert.alert('Sorry!!', err.message, [
 					{
 						text: 'Try Again',
-						onPress: () => {
-							console.log('OK Pressed');
-						},
+						onPress: () => {},
 					},
 				]);
 			}
 			setLoading(false);
 		} else {
+			// any user errors will alerted
 			Alert.alert('Sorry!!', 'Invalid field entry', [
 				{
 					text: 'Ok',
-					onPress: () => {
-						console.log('OK Pressed');
-					},
+					onPress: () => {},
 				},
 			]);
 		}

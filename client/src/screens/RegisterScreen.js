@@ -21,7 +21,7 @@ import {
 import { Button } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
 import validate from 'validate.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import styles from '../styles/screen/RegisterScreenStyles';
 import Colors from '../constants/Colors';
@@ -35,7 +35,7 @@ const constraints = {
 	confirmPassword: { equality: 'password' },
 };
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
 	const [inputData, setInputData] = useState({
 		name: '',
 		email: '',
@@ -59,24 +59,31 @@ const LoginScreen = ({ navigation }) => {
 	const [loading, setLoading] = useState(false);
 	const dispatch = useDispatch();
 
+	// change text handler for name input
 	const handleNameInputChange = (value) => {
 		setInputData({
 			...inputData,
 			name: value,
 		});
 	};
+
+	// change text handler for age input
 	const handleAgeInputChange = (value) => {
 		setInputData({
 			...inputData,
 			age: value,
 		});
 	};
+
+	// change text handler for height input
 	const handleHeightInputChange = (value) => {
 		setInputData({
 			...inputData,
 			height: value,
 		});
 	};
+
+	// change text handler for weight input
 	const handleWeightInputChange = (value) => {
 		setInputData({
 			...inputData,
@@ -84,16 +91,20 @@ const LoginScreen = ({ navigation }) => {
 		});
 	};
 
+	// change text handler for email input
 	const handleEmailInputChange = (value) => {
 		setInputData({ ...inputData, email: value });
 	};
 
+	// change text handler for password input
 	const handlePasswordInputChange = (value) => {
 		setInputData({
 			...inputData,
 			password: value,
 		});
 	};
+
+	// change text handler for confirm password input
 	const handleConfirmPasswordInputChange = (value) => {
 		setInputData({
 			...inputData,
@@ -101,12 +112,15 @@ const LoginScreen = ({ navigation }) => {
 		});
 	};
 
+	// toggle secure text entry attribute of password input
 	const toggleSecureTextEntryForPassword = () => {
 		setInputData({
 			...inputData,
 			secureTextEntryForPassword: !inputData.secureTextEntryForPassword,
 		});
 	};
+
+	// toggle secure text entry attribute of confirm password input
 	const toggleSecureTextEntryForConfirmPassword = () => {
 		setInputData({
 			...inputData,
@@ -114,6 +128,7 @@ const LoginScreen = ({ navigation }) => {
 		});
 	};
 
+	// applies validation on email input
 	const handleEmailEndEditing = () => {
 		if (validate({ email: inputData.email }, constraints)) {
 			setInputData({ ...inputData, isEmailValid: false, showEmailAlert: true });
@@ -122,6 +137,7 @@ const LoginScreen = ({ navigation }) => {
 		}
 	};
 
+	// applies validation on password input
 	const handlePasswordEndEditing = () => {
 		if (validate({ password: inputData.password }, constraints)) {
 			setInputData({
@@ -138,6 +154,7 @@ const LoginScreen = ({ navigation }) => {
 		}
 	};
 
+	// applies validation on confirm input
 	const handleConfirmPasswordEndEditing = () => {
 		if (
 			validate(
@@ -162,6 +179,7 @@ const LoginScreen = ({ navigation }) => {
 		}
 	};
 
+	// handles Register button press
 	const handleOnSubmit = async () => {
 		const formData = {
 			name: inputData.name,
@@ -189,8 +207,10 @@ const LoginScreen = ({ navigation }) => {
 			dispatch(clearErrors());
 			setLoading(true);
 			try {
+				// after basic validation, dispatch register action to reducer
 				await dispatch(register(formData));
 			} catch (err) {
+				// any backend errors will be alerted to the user
 				Alert.alert('Sorry!!', err.message, [
 					{
 						text: 'Try Again',
@@ -202,6 +222,7 @@ const LoginScreen = ({ navigation }) => {
 			}
 			setLoading(false);
 		} else {
+			// any user errors will alerted
 			Alert.alert('Sorry!!', 'Invalid field entry', [
 				{
 					text: 'Ok',
@@ -605,4 +626,4 @@ const LoginScreen = ({ navigation }) => {
 	);
 };
 
-export default LoginScreen;
+export default RegisterScreen;
