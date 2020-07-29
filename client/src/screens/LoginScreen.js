@@ -8,13 +8,24 @@ import {
 	KeyboardAvoidingView,
 	Platform,
 	Keyboard,
+	ActivityIndicator,
+	Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
+import validate from 'validate.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from '../styles/screen/LoginScreenStyles';
 import Colors from '../constants/Colors';
+import { login, clearErrors } from '../store/actions/authAction';
+
+const constraints = {
+	from: {
+		email: true,
+	},
+};
 
 const LoginScreen = ({ navigation }) => {
 	const [inputData, setInputData] = useState({
@@ -22,14 +33,14 @@ const LoginScreen = ({ navigation }) => {
 		password: '',
 		isEmailValid: false,
 		secureTextEntry: true,
+		showEmailAlert: false,
 	});
 
+	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
+
 	const handleEmailInputChange = (value) => {
-		if (value.length !== 0) {
-			setInputData({ ...inputData, email: value, isEmailValid: true });
-		} else {
-			setInputData({ ...inputData, email: value, isEmailValid: false });
-		}
+		setInputData({ ...inputData, email: value });
 	};
 
 	const handlePasswordInputChange = (value) => {
@@ -45,6 +56,50 @@ const LoginScreen = ({ navigation }) => {
 			secureTextEntry: !inputData.secureTextEntry,
 		});
 	};
+
+	const handleEndEditing = () => {
+		if (validate({ from: inputData.email }, constraints)) {
+			setInputData({ ...inputData, isEmailValid: false, showEmailAlert: true });
+		} else {
+			setInputData({ ...inputData, isEmailValid: true, showEmailAlert: false });
+		}
+	};
+
+	const handleOnSubmit = async () => {
+		const formData = {
+			email: inputData.email,
+			password: inputData.password,
+		};
+
+		if (inputData.isEmailValid && inputData.password) {
+			dispatch(clearErrors());
+			setLoading(true);
+
+			try {
+				await dispatch(login(formData));
+			} catch (err) {
+				Alert.alert('Sorry!!', err.message, [
+					{
+						text: 'Try Again',
+						onPress: () => {
+							console.log('OK Pressed');
+						},
+					},
+				]);
+			}
+			setLoading(false);
+		} else {
+			Alert.alert('Sorry!!', 'Invalid field entry', [
+				{
+					text: 'Ok',
+					onPress: () => {
+						console.log('OK Pressed');
+					},
+				},
+			]);
+		}
+	};
+
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<KeyboardAvoidingView
@@ -60,13 +115,24 @@ const LoginScreen = ({ navigation }) => {
 					</View>
 					<Animatable.View style={styles.footer} animation='fadeInUpBig'>
 						<Text style={styles.text_footer}>Email</Text>
-						<View style={styles.action}>
-							<FontAwesome name='user-o' color={Colors.accentLight} size={20} />
+						<View
+							style={
+								inputData.showEmailAlert ? styles.actionError : styles.action
+							}
+						>
+							<FontAwesome
+								name='user-o'
+								color={
+									inputData.showEmailAlert ? '#FF0000' : Colors.accentLight
+								}
+								size={20}
+							/>
 							<TextInput
 								placeholder='Enter your Email'
 								style={styles.textInput}
 								autoCapitalize='none'
 								onChangeText={(value) => handleEmailInputChange(value)}
+								onEndEditing={handleEndEditing}
 							/>
 							{inputData.isEmailValid && (
 								<Animatable.View animation='bounceIn'>
@@ -78,6 +144,11 @@ const LoginScreen = ({ navigation }) => {
 								</Animatable.View>
 							)}
 						</View>
+						{inputData.showEmailAlert && (
+							<Text style={styles.errorMsg}>
+								Email you entered is not valid
+							</Text>
+						)}
 						<Text style={{ ...styles.text_footer, marginTop: 35 }}>
 							Password
 						</Text>
@@ -98,19 +169,20 @@ const LoginScreen = ({ navigation }) => {
 								)}
 							</TouchableOpacity>
 						</View>
+
 						<View style={styles.buttonContainer}>
-							<Button
-								containerStyle={styles.button}
-								buttonStyle={styles.buttonContent}
-								title='Login'
-								type='solid'
-								raised={true}
-								onPress={() =>
-									console.log(
-										`Email: ${inputData.email} & Password: ${inputData.password}`
-									)
-								}
-							/>
+							{loading ? (
+								<ActivityIndicator size='small' color={Colors.primary} />
+							) : (
+								<Button
+									containerStyle={styles.button}
+									buttonStyle={styles.buttonContent}
+									title='Login'
+									type='solid'
+									raised={true}
+									onPress={handleOnSubmit}
+								/>
+							)}
 						</View>
 						<TouchableOpacity
 							style={styles.newAccountActionContainer}

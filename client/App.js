@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -6,9 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { Provider } from 'react-redux';
 import { Asset } from 'expo-asset';
+import { useSelector, useDispatch } from 'react-redux';
 
+import AuthStackNavigator from './src/navigation/AuthStackNavigator';
 import DrawerNavigator from './src/navigation/DrawerNavigator';
-import LandingStackNavigator from './src/navigation/LandingStackNavigator';
 import store from './src/store/store';
 
 const fetchFonts = async () => {
@@ -39,8 +40,8 @@ export default function App() {
 	return (
 		<Provider store={store}>
 			<NavigationContainer>
+				<AuthStackNavigator />
 				{/* <DrawerNavigator /> */}
-				<LandingStackNavigator />
 			</NavigationContainer>
 		</Provider>
 	);

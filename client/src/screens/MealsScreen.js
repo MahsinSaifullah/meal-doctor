@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container, Content, Text } from 'native-base';
-
+import { Container, Content, Text } from 'react-native';
 import styles from '../styles/screen/MealsScreenStyles';
 
 const MealsScreen = () => {

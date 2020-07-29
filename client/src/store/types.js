@@ -1,1 +1,12 @@
 export const SET_DATE = 'SET_DATE';
+export const SET_TOKEN = 'SET_TOKEN';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const USER_LOADED = 'USER_LOADED';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const SET_CURRENTMEALTYPE = 'SET_CURRENTMEALTYPE';
+export const SEARCH_MEAL_CALORIES = 'SEARCH_MEAL_CALORIES';

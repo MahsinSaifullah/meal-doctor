@@ -81,6 +81,14 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		color: Colors.accent,
 	},
+	actionError: {
+		flexDirection: 'row',
+		marginTop: 10,
+		borderBottomWidth: 1,
+		borderBottomColor: '#FF0000',
+		paddingBottom: 5,
+	},
+	errorMsg: { color: '#FF0000', fontSize: 14 },
 });
 
 export default styles;

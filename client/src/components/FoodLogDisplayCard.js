@@ -7,7 +7,7 @@ import moment from 'moment';
 import styles from '../styles/component/FoodLogDisplayCardStyles';
 import FoodLogItem from './FoodLogItem';
 
-const FoodLogDisplayCard = ({ mealType }) => {
+const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
 	const displayedFoodLogs = useSelector((state) =>
 		state.mealLog.foodLogs.filter((foodLog) => {
@@ -28,7 +28,11 @@ const FoodLogDisplayCard = ({ mealType }) => {
 					<Text style={styles.mealTypeHeaderText}>{mealType}</Text>
 				</View>
 				<View>
-					<Button rounded style={styles.addMealButton}>
+					<Button
+						rounded
+						style={styles.addMealButton}
+						onPress={() => onAdd(mealType)}
+					>
 						<Text style={styles.addMealButtonText}>+</Text>
 					</Button>
 				</View>

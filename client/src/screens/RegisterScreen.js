@@ -9,6 +9,8 @@ import {
 	Platform,
 	Keyboard,
 	ScrollView,
+	ActivityIndicator,
+	Alert,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {
@@ -18,9 +20,20 @@ import {
 } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
 import { RadioButton } from 'react-native-paper';
+import validate from 'validate.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from '../styles/screen/RegisterScreenStyles';
 import Colors from '../constants/Colors';
+import { register, clearErrors } from '../store/actions/authAction';
+
+const constraints = {
+	email: {
+		email: true,
+	},
+	password: { length: { minimum: 6 } },
+	confirmPassword: { equality: 'password' },
+};
 
 const LoginScreen = ({ navigation }) => {
 	const [inputData, setInputData] = useState({
@@ -35,9 +48,16 @@ const LoginScreen = ({ navigation }) => {
 		password: '',
 		confirmPassword: '',
 		isEmailValid: false,
+		isPasswordValid: false,
+		showEmailAlert: false,
+		showPasswordAlert: false,
+		showConfirmPasswordAlert: false,
 		secureTextEntryForPassword: true,
 		secureTextEntryForConfirmPassword: true,
 	});
+
+	const [loading, setLoading] = useState(false);
+	const dispatch = useDispatch();
 
 	const handleNameInputChange = (value) => {
 		setInputData({
@@ -65,11 +85,7 @@ const LoginScreen = ({ navigation }) => {
 	};
 
 	const handleEmailInputChange = (value) => {
-		if (value.length !== 0) {
-			setInputData({ ...inputData, email: value, isEmailValid: true });
-		} else {
-			setInputData({ ...inputData, email: value, isEmailValid: false });
-		}
+		setInputData({ ...inputData, email: value });
 	};
 
 	const handlePasswordInputChange = (value) => {
@@ -97,6 +113,106 @@ const LoginScreen = ({ navigation }) => {
 			secureTextEntryForConfirmPassword: !inputData.secureTextEntryForConfirmPassword,
 		});
 	};
+
+	const handleEmailEndEditing = () => {
+		if (validate({ email: inputData.email }, constraints)) {
+			setInputData({ ...inputData, isEmailValid: false, showEmailAlert: true });
+		} else {
+			setInputData({ ...inputData, isEmailValid: true, showEmailAlert: false });
+		}
+	};
+
+	const handlePasswordEndEditing = () => {
+		if (validate({ password: inputData.password }, constraints)) {
+			setInputData({
+				...inputData,
+				isPasswordValid: false,
+				showPasswordAlert: true,
+			});
+		} else {
+			setInputData({
+				...inputData,
+				isPasswordValid: true,
+				showPasswordAlert: false,
+			});
+		}
+	};
+
+	const handleConfirmPasswordEndEditing = () => {
+		if (
+			validate(
+				{
+					password: inputData.password,
+					confirmPassword: inputData.confirmPassword,
+				},
+				constraints
+			)
+		) {
+			setInputData({
+				...inputData,
+				isPasswordValid: false,
+				showConfirmPasswordAlert: true,
+			});
+		} else {
+			setInputData({
+				...inputData,
+				isPasswordValid: true,
+				showConfirmPasswordAlert: false,
+			});
+		}
+	};
+
+	const handleOnSubmit = async () => {
+		const formData = {
+			name: inputData.name,
+			gender: inputData.gender,
+			age: inputData.age,
+			height: inputData.height,
+			weight: inputData.weight,
+			activityLevel: inputData.activityLevel,
+			goal: inputData.goal,
+			email: inputData.email,
+			password: inputData.password,
+		};
+
+		if (
+			inputData.name &&
+			inputData.gender &&
+			inputData.age &&
+			inputData.height &&
+			inputData.weight &&
+			inputData.activityLevel &&
+			inputData.goal &&
+			inputData.isEmailValid &&
+			inputData.isPasswordValid
+		) {
+			dispatch(clearErrors());
+			setLoading(true);
+			try {
+				await dispatch(register(formData));
+			} catch (err) {
+				Alert.alert('Sorry!!', err.message, [
+					{
+						text: 'Try Again',
+						onPress: () => {
+							console.log('OK Pressed');
+						},
+					},
+				]);
+			}
+			setLoading(false);
+		} else {
+			Alert.alert('Sorry!!', 'Invalid field entry', [
+				{
+					text: 'Ok',
+					onPress: () => {
+						console.log('OK Pressed');
+					},
+				},
+			]);
+		}
+	};
+
 	return (
 		<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 			<KeyboardAvoidingView
@@ -297,9 +413,7 @@ const LoginScreen = ({ navigation }) => {
 										<Text style={styles.actionRadioText}> V. High</Text>
 									</View>
 								</View>
-								<Text style={{ ...styles.text_footer, marginTop: 10 }}>
-									Goal
-								</Text>
+								<Text style={styles.text_footer}>Goal</Text>
 								<View style={styles.actionGender}>
 									<View style={styles.actionRadioContent}>
 										<RadioButton
@@ -356,7 +470,13 @@ const LoginScreen = ({ navigation }) => {
 								<Text style={{ ...styles.text_footer, marginTop: 10 }}>
 									Email
 								</Text>
-								<View style={styles.action}>
+								<View
+									style={
+										inputData.showEmailAlert
+											? styles.actionError
+											: styles.action
+									}
+								>
 									<MaterialCommunityIcons
 										name='email-outline'
 										color={Colors.accentLight}
@@ -367,6 +487,7 @@ const LoginScreen = ({ navigation }) => {
 										style={styles.textInput}
 										autoCapitalize='none'
 										onChangeText={(value) => handleEmailInputChange(value)}
+										onEndEditing={handleEmailEndEditing}
 									/>
 									{inputData.isEmailValid && (
 										<Animatable.View animation='bounceIn'>
@@ -378,10 +499,21 @@ const LoginScreen = ({ navigation }) => {
 										</Animatable.View>
 									)}
 								</View>
+								{inputData.showEmailAlert && (
+									<Text style={styles.errorMsg}>
+										email you entered is not valid
+									</Text>
+								)}
 								<Text style={{ ...styles.text_footer, marginTop: 10 }}>
 									Password
 								</Text>
-								<View style={styles.action}>
+								<View
+									style={
+										inputData.showPasswordAlert
+											? styles.actionError
+											: styles.action
+									}
+								>
 									<Feather name='lock' color={Colors.accentLight} size={18} />
 									<TextInput
 										placeholder='Enter your Password'
@@ -389,6 +521,7 @@ const LoginScreen = ({ navigation }) => {
 										autoCapitalize='none'
 										onChangeText={(value) => handlePasswordInputChange(value)}
 										secureTextEntry={inputData.secureTextEntryForPassword}
+										onEndEditing={handlePasswordEndEditing}
 									/>
 									<TouchableOpacity onPress={toggleSecureTextEntryForPassword}>
 										{inputData.secureTextEntryForPassword ? (
@@ -398,10 +531,21 @@ const LoginScreen = ({ navigation }) => {
 										)}
 									</TouchableOpacity>
 								</View>
+								{inputData.showPasswordAlert && (
+									<Text style={styles.errorMsg}>
+										password is too short, must be minimum 6 characters
+									</Text>
+								)}
 								<Text style={{ ...styles.text_footer, marginTop: 10 }}>
 									Confirm Password
 								</Text>
-								<View style={styles.action}>
+								<View
+									style={
+										inputData.showConfirmPasswordAlert
+											? styles.actionError
+											: styles.action
+									}
+								>
 									<Feather name='lock' color={Colors.accentLight} size={18} />
 									<TextInput
 										placeholder='Enter your Password'
@@ -413,6 +557,7 @@ const LoginScreen = ({ navigation }) => {
 										secureTextEntry={
 											inputData.secureTextEntryForConfirmPassword
 										}
+										onEndEditing={handleConfirmPasswordEndEditing}
 									/>
 									<TouchableOpacity
 										onPress={toggleSecureTextEntryForConfirmPassword}
@@ -424,16 +569,25 @@ const LoginScreen = ({ navigation }) => {
 										)}
 									</TouchableOpacity>
 								</View>
+								{inputData.showConfirmPasswordAlert && (
+									<Text style={styles.errorMsg}>password did not match</Text>
+								)}
+
 								<View style={styles.buttonContainer}>
-									<Button
-										containerStyle={styles.button}
-										buttonStyle={styles.buttonContent}
-										title='Register'
-										type='solid'
-										raised={true}
-										onPress={() => console.log(inputData)}
-									/>
+									{loading ? (
+										<ActivityIndicator size='small' color={Colors.primary} />
+									) : (
+										<Button
+											containerStyle={styles.button}
+											buttonStyle={styles.buttonContent}
+											title='Register'
+											type='solid'
+											raised={true}
+											onPress={handleOnSubmit}
+										/>
+									)}
 								</View>
+
 								<TouchableOpacity
 									style={styles.newAccountActionContainer}
 									onPress={() => navigation.navigate('Login')}

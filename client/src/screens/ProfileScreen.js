@@ -3,6 +3,8 @@ import { Container, Content, Text } from 'native-base';
 
 import styles from '../styles/screen/ProfileScreenStyles';
 
+import Colors from '../constants/Colors';
+
 const ProfileScreen = () => {
 	return (
 		<Container>
