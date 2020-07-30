@@ -1,3 +1,3 @@
 export default {
-	devServer: 'http://59a7b7c141b7.ngrok.io',
+	devServer: 'http://22fde7be2dc9.ngrok.io',
 };

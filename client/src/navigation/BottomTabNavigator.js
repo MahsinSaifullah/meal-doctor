@@ -1,19 +1,52 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import TrackStackNavigator from './TrackStackNavigator';
 import ProgressStackNavigator from './ProgressStackNavigator';
 import MealsScreen from '../screens/MealsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-const Tab = createBottomTabNavigator();
+import Colors from '../constants/Colors';
+const Tab = createMaterialBottomTabNavigator();
 
 const MealTabNavigator = () => {
 	return (
-		<Tab.Navigator initialRouteName='Track'>
-			<Tab.Screen name='Track' component={TrackStackNavigator} />
-			<Tab.Screen name='Progress' component={ProgressStackNavigator} />
-			<Tab.Screen name='Meals' component={MealsScreen} />
-			<Tab.Screen name='Profile' component={ProfileScreen} />
+		<Tab.Navigator
+			initialRouteName='Track'
+			activeColor={Colors.bgWhite}
+			shifting={true}
+		>
+			<Tab.Screen
+				name='Track'
+				options={{
+					tabBarIcon: ({ color }) => {
+						return <Ionicons name='ios-restaurant' size={25} color={color} />;
+					},
+					tabBarColor: Colors.primary,
+				}}
+				component={TrackStackNavigator}
+			/>
+			<Tab.Screen
+				name='Progress'
+				options={{
+					tabBarIcon: ({ color }) => {
+						return <FontAwesome name='pie-chart' size={25} color={color} />;
+					},
+					tabBarColor: Colors.accent,
+				}}
+				component={ProgressStackNavigator}
+			/>
+
+			<Tab.Screen
+				name='Profile'
+				options={{
+					tabBarIcon: ({ color }) => {
+						return <FontAwesome name='user' size={25} color={color} />;
+					},
+					tabBarColor: Colors.primary,
+				}}
+				component={ProfileScreen}
+			/>
 		</Tab.Navigator>
 	);
 };

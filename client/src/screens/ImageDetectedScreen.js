@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	View,
 	Text,
@@ -9,20 +9,69 @@ import {
 import * as Animatable from 'react-native-animatable';
 import { Feather } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import Modal from 'react-native-modal';
 
 import styles from '../styles/screen/ImageDetectedScreenStyle';
 import Colors from '../constants/Colors';
 import DetectedImageLabelItem from '../components/DetectedImageLabelItem';
 import Loading from '../components/Loading';
+import ManualSearchInputModal from '../components/ManualSearchInputModal';
+import {
+	searchMealCalories,
+	clearMealCalories,
+} from '../store/actions/detectionAction';
 
 const ImageDetectedScreen = ({ navigation }) => {
 	const labels = useSelector((state) => state.detection.detectedImageLabels);
 	const awsImageUri = useSelector((state) => state.detection.awsImageUrl);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const dispatch = useDispatch();
+
+	// toggles the modal in track screen
+	const toggleModal = () => {
+		setIsModalOpen(!isModalOpen);
+	};
+
+	// handles search button press on manualSearch modal
+	const handleOnMealSearch = (mealName) => {
+		if (!mealName) return;
+		// clear meal calorie response in detection reducer
+		dispatch(clearMealCalories());
+
+		// add meal calorie response in detection reducer
+		dispatch(searchMealCalories(mealName));
+		toggleModal();
+		navigation.navigate('Detected Meal', { mealName: mealName });
+	};
+
+	// handle selected label press from image detection
+	const handleSelectedLabel = (label) => {
+		// clear meal calorie response in detection reducer
+		dispatch(clearMealCalories());
+
+		// add meal calorie response in detection reducer
+		dispatch(searchMealCalories(label));
+		navigation.navigate('Detected Meal', { mealName: label });
+	};
 
 	if (labels.length > 0) {
 		return (
 			<View style={styles.screenContent}>
+				<Modal
+					isVisible={isModalOpen}
+					onBackdropPress={toggleModal}
+					hideModalContentWhileAnimating={true}
+					onSwipeComplete={toggleModal}
+					swipeThreshold={20}
+					swipeDirection='down'
+				>
+					<ManualSearchInputModal
+						onCancel={toggleModal}
+						onSearch={handleOnMealSearch}
+					/>
+				</Modal>
 				<Animatable.View style={styles.header} animation='fadeIn'>
 					<ImageBackground
 						source={{ uri: awsImageUri }}
@@ -45,7 +94,13 @@ const ImageDetectedScreen = ({ navigation }) => {
 							animation='fadeInDownBig'
 						>
 							{labels.map((label, i) => {
-								return <DetectedImageLabelItem key={i} label={label} />;
+								return (
+									<DetectedImageLabelItem
+										key={i}
+										label={label}
+										onSelectLabel={handleSelectedLabel}
+									/>
+								);
 							})}
 						</Animatable.View>
 						<View style={styles.manualSearchContainer}>
@@ -56,7 +111,7 @@ const ImageDetectedScreen = ({ navigation }) => {
 								type='solid'
 								raised={true}
 								titleStyle={styles.buttonText}
-								onPress={() => {}}
+								onPress={toggleModal}
 							/>
 						</View>
 					</ScrollView>

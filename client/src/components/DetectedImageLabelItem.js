@@ -9,14 +9,17 @@ import {
 
 import styles from '../styles/component/DetectedImageLabelItemStyles';
 
-const DetectedImageLabelItem = ({ label }) => {
+const DetectedImageLabelItem = ({ label, onSelectLabel }) => {
 	let TouchableComp = TouchableOpacity;
 
 	if (Platform.OS === 'android' && Platform.Version >= 21)
 		TouchableComp = TouchableNativeFeedback;
 
 	return (
-		<TouchableComp style={{ width: '100%' }}>
+		<TouchableComp
+			onPress={() => onSelectLabel(label)}
+			style={{ width: '100%' }}
+		>
 			<View style={styles.componentContainer}>
 				<Text style={styles.label}>{label}</Text>
 			</View>
