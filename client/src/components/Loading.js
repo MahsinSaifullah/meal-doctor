@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, Text, Image } from 'react-native';
 
 import styles from '../styles/component/LoadingStyles';
-import Colors from '../constants/Colors';
 
-const Loading = () => {
+const Loading = ({ prompt }) => {
 	return (
 		<View style={styles.componentContent}>
-			<ActivityIndicator size='large' color={Colors.primary} />
+			<Image source={require('../../assets/loader.gif')} style={styles.image} />
+			<View style={styles.textContainer}>
+				<Text style={styles.text}>{prompt}...</Text>
+			</View>
 		</View>
 	);
 };

@@ -6,6 +6,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TrackScreen from '../screens/TrackScreen';
 import SelectMealScreen from '../screens/SelectMealScreen';
 import DetectedMealScreen from '../screens/DetectedMealScreen';
+import ImageDetectedScreen from '../screens/ImageDetectedScreen';
 import MealTimerScreen from '../screens/MealTimerScreen';
 import IosHeaderConfig from '../constants/DefaultIOSHeaderConfig';
 import AndroidHeaderConfig from '../constants/DefaultAndroidHeaderConfig';
@@ -30,15 +31,10 @@ const TrackStackNavigator = (props) => {
 				name='Track'
 				options={({ navigation }) => ({
 					headerTitle: IosHeaderConfig.title,
-					headerTintColor:
-						Platform.OS === 'android'
-							? AndroidHeaderConfig.tintColor
-							: IosHeaderConfig.tintColor,
+					headerTintColor: AndroidHeaderConfig.tintColor,
+
 					headerStyle: {
-						backgroundColor:
-							Platform.OS === 'android'
-								? AndroidHeaderConfig.bgColor
-								: IosHeaderConfig.bgColor,
+						backgroundColor: AndroidHeaderConfig.bgColor,
 					},
 					headerLeft: (props) => (
 						<HeaderButtons
@@ -57,7 +53,23 @@ const TrackStackNavigator = (props) => {
 				})}
 				component={TrackScreen}
 			/>
-			<Stack.Screen name='Detected Meal' component={DetectedMealScreen} />
+			<Stack.Screen
+				name='Detected Meal'
+				options={({ route }) => ({
+					headerTitle: 'Detected Meal',
+					headerTintColor: AndroidHeaderConfig.tintColor,
+
+					headerStyle: {
+						backgroundColor: AndroidHeaderConfig.bgColor,
+					},
+				})}
+				component={DetectedMealScreen}
+			/>
+			<Stack.Screen
+				name='Image Detect'
+				options={{ headerShown: false }}
+				component={ImageDetectedScreen}
+			/>
 			<Stack.Screen name='Select Meal' component={SelectMealScreen} />
 			<Stack.Screen name='Meal Timer' component={MealTimerScreen} />
 		</Stack.Navigator>

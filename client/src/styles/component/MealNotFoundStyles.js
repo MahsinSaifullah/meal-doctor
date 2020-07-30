@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
-import Colors from '../../constants/Colors';
 import Fonts from '../../constants/Fonts';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
 	componentContent: {
@@ -10,17 +10,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	image: {
-		height: 100,
-		width: 100,
+	titleTextContainer: {
+		marginTop: 10,
 	},
-	textContainer: {
-		marginTop: 20,
-	},
-	text: {
+	titleText: {
 		fontFamily: Fonts.mainTitleFont,
+		fontSize: 35,
 		color: Colors.primary,
-		fontSize: 30,
 	},
 });
 

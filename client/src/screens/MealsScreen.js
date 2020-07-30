@@ -1,8 +1,11 @@
 import React from 'react';
-import { Container, Content, Text } from 'react-native';
-import styles from '../styles/screen/MealsScreenStyles';
+import { Container, Content, Text } from 'native-base';
 
-const MealsScreen = () => {
+import styles from '../styles/screen/ProfileScreenStyles';
+
+import Colors from '../constants/Colors';
+
+const ProfileScreen = () => {
 	return (
 		<Container>
 			<Content contentContainerStyle={styles.screenContent}>
@@ -12,4 +15,4 @@ const MealsScreen = () => {
 	);
 };
 
-export default MealsScreen;
+export default ProfileScreen;

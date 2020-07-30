@@ -5,24 +5,32 @@ import {
 	ScrollView,
 	Text,
 	ImageBackground,
-	Button,
+	Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import Modal from 'react-native-modal';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 import styles from '../styles/screen/TrackScreenStyles';
 import Colors from '../constants/Colors';
 import TotalNutrientDisplay from '../components/TotalNutrientDisplay';
 import FoodLogDisplay from '../components/FoodLogDisplayCard';
 import { setDate, setCurrentMealType } from '../store/actions/mealLogAction';
-import { searchMealCalories } from '../store/actions/detectionAction';
+import {
+	searchMealCalories,
+	clearMealCalories,
+	detectImage,
+	clearImageDetection,
+} from '../store/actions/detectionAction';
 import { loadUser } from '../store/actions/authAction';
 import Loading from '../components/Loading';
 import SearchTypeModal from '../components/SearchTypeModal';
 import ManualSearchInputModal from '../components/ManualSearchInputModal';
+import VisionSearchModal from '../components/VisionSearchModal';
 
 const TrackScreen = ({ navigation }) => {
 	const token = useSelector((state) => state.auth.token);
@@ -61,11 +69,14 @@ const TrackScreen = ({ navigation }) => {
 	//handles selected date on date picker modal
 	const handleConfirmDate = (date) => {
 		setShowDatePicker(false);
+
+		//set current date in meal log reducer
 		dispatch(setDate(date));
 	};
 
 	// handle meal add button press
 	const handleMealAdd = (mealType) => {
+		//set current meal type in meal log reducer
 		dispatch(setCurrentMealType(mealType));
 		toggleModal();
 	};
@@ -82,13 +93,90 @@ const TrackScreen = ({ navigation }) => {
 	};
 
 	// handles vision search button press on manualOrVision modal
-	const handleOnVisionSearch = () => {};
+	const handleOnVisionSearch = () => {
+		setModalType('visionSearch');
+	};
 
 	// handles search button press on manualSearch modal
 	const handleOnMealSearch = (mealName) => {
+		if (!mealName) return;
+		// clear meal calorie response in detection reducer
+		dispatch(clearMealCalories());
+
+		// add meal calorie response in detection reducer
 		dispatch(searchMealCalories(mealName));
 		toggleModal();
-		navigation.navigate('Detected Meal');
+		navigation.navigate('Detected Meal', { mealName: mealName });
+	};
+
+	// get user permission to use Native features
+	const getPermissionAsync = async () => {
+		const { status } = await Permissions.askAsync(
+			Permissions.CAMERA,
+			Permissions.CAMERA_ROLL
+		);
+
+		if (status !== 'granted') {
+			Alert.alert(
+				'Sorry!!',
+				'we need camera roll permissions to make this work!',
+				[
+					{
+						text: 'OK',
+						onPress: () => {},
+					},
+				]
+			);
+
+			return false;
+		}
+
+		return true;
+	};
+
+	// handles take a photo button, redirect to native camera
+	const handleOnPhoto = async () => {
+		const hasPermission = await getPermissionAsync();
+
+		if (!hasPermission) {
+			toggleModal();
+			return;
+		}
+		const image = await ImagePicker.launchCameraAsync({
+			aspect: [16, 9],
+			quality: 0.5,
+		});
+
+		// after user takes a photo
+		if (!image.cancelled) {
+			dispatch(clearImageDetection());
+			toggleModal();
+			dispatch(detectImage(image));
+			navigation.navigate('Image Detect');
+		}
+	};
+
+	// handles camera roll button, redirect to camera roll
+	const handleOnCameraRoll = async () => {
+		const hasPermission = await getPermissionAsync();
+
+		if (!hasPermission) {
+			toggleModal();
+			return;
+		}
+
+		const image = await ImagePicker.launchImageLibraryAsync({
+			aspect: [16, 9],
+			quality: 0.5,
+		});
+
+		//after user selects a photo from camera roll
+		if (!image.cancelled) {
+			dispatch(clearImageDetection());
+			toggleModal();
+			dispatch(detectImage(image));
+			navigation.navigate('Image Detect');
+		}
 	};
 
 	if (user) {
@@ -111,10 +199,15 @@ const TrackScreen = ({ navigation }) => {
 								onManualSearch={handleOnManualSearch}
 								onVisionSearch={handleOnVisionSearch}
 							/>
-						) : (
+						) : modalType === 'manualSearch' ? (
 							<ManualSearchInputModal
 								onCancel={toggleModal}
 								onSearch={handleOnMealSearch}
+							/>
+						) : (
+							<VisionSearchModal
+								onPhoto={handleOnPhoto}
+								onCameraRoll={handleOnCameraRoll}
 							/>
 						)}
 					</Modal>
@@ -171,7 +264,7 @@ const TrackScreen = ({ navigation }) => {
 			</View>
 		);
 	} else {
-		return <Loading />;
+		return <Loading prompt='LOADING' />;
 	}
 };
 
