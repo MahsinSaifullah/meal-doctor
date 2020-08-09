@@ -60,7 +60,8 @@ const FoodLogItem = ({
 							</Text>
 						</Text>
 						<Text style={styles.mealSubtitleText}>
-							Time: <Text style={styles.mealSubtitleValue}>{mealTime} min</Text>
+							Mindfulness:{' '}
+							<Text style={styles.mealSubtitleValue}>{mealTime}</Text>
 						</Text>
 					</View>
 				</View>

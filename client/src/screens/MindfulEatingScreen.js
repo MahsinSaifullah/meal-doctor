@@ -1,16 +1,16 @@
 import React from 'react';
 import { Container, Content, Text } from 'native-base';
 
-import styles from '../styles/screen/SelectMealScreenStyles';
+import styles from '../styles/screen/MindfulEatingScreenStyles';
 
-const SelectMealScreen = () => {
+const MindfulEatingScreen = () => {
 	return (
 		<Container>
 			<Content contentContainerStyle={styles.screenContent}>
-				<Text>Select Meal Screen</Text>
+				<Text>Mindful Eating</Text>
 			</Content>
 		</Container>
 	);
 };
 
-export default SelectMealScreen;
+export default MindfulEatingScreen;

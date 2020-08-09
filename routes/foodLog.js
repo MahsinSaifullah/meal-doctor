@@ -54,7 +54,7 @@ router.post(
 			mealType,
 			awsImageURL,
 			awsImageKey,
-			timeToFinishMeal,
+			mindfulness,
 			calorie,
 			protein,
 			carb,
@@ -87,7 +87,7 @@ router.post(
 				mealQuantity,
 				awsImageURL: !awsImageURL ? awsImageURL : '',
 				awsImageKey: !awsImageKey ? awsImageKey : '',
-				timeToFinishMeal,
+				mindfulness,
 				calorie,
 				protein,
 				carb,
@@ -106,7 +106,7 @@ router.post(
 				isHealthy,
 				dietLabels,
 				healthLabels,
-				date: !date ? date : Date.now(),
+				date: date ? date : Date.now(),
 			});
 
 			// save food log to database

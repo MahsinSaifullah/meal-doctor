@@ -12,10 +12,11 @@ const DetectedMealCard = ({
 	fat,
 	fiber,
 	calories,
+	onMealSelect,
 }) => {
 	return (
 		<View style={styles.componentContent}>
-			<TouchableOpacity>
+			<TouchableOpacity onPress={() => onMealSelect(id)}>
 				<View style={styles.mealTitleContainer}>
 					<Text style={styles.mealTitleText}>{mealName}</Text>
 				</View>

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import TrackScreen from '../screens/TrackScreen';
-import SelectMealScreen from '../screens/SelectMealScreen';
+import MindfulEatingScreen from '../screens/MindfulEatingScreen';
 import DetectedMealScreen from '../screens/DetectedMealScreen';
 import ImageDetectedScreen from '../screens/ImageDetectedScreen';
 import MealTimerScreen from '../screens/MealTimerScreen';
@@ -70,7 +70,7 @@ const TrackStackNavigator = (props) => {
 				options={{ headerShown: false }}
 				component={ImageDetectedScreen}
 			/>
-			<Stack.Screen name='Select Meal' component={SelectMealScreen} />
+			<Stack.Screen name='Mindful Eating' component={MindfulEatingScreen} />
 			<Stack.Screen name='Meal Timer' component={MealTimerScreen} />
 		</Stack.Navigator>
 	);
