@@ -15,6 +15,7 @@ const initialState = {
 	foodLogs: [],
 	chosenDate: Date.now(),
 	currentMealType: '',
+	mindfulness: 0,
 };
 
 export default (state = initialState, action) => {
@@ -50,7 +51,7 @@ export default (state = initialState, action) => {
 							'date'
 						);
 
-						return isDateMatch;
+						return !isDateMatch;
 					}),
 					action.payload.dailyStat,
 				],

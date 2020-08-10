@@ -19,7 +19,12 @@ import styles from '../styles/screen/TrackScreenStyles';
 import Colors from '../constants/Colors';
 import TotalNutrientDisplay from '../components/TotalNutrientDisplay';
 import FoodLogDisplay from '../components/FoodLogDisplayCard';
-import { setDate, setCurrentMealType } from '../store/actions/mealLogAction';
+import {
+	setDate,
+	setCurrentMealType,
+	getFoodLogs,
+	getDailyStats,
+} from '../store/actions/mealLogAction';
 import {
 	searchMealCalories,
 	clearMealCalories,
@@ -56,6 +61,8 @@ const TrackScreen = ({ navigation }) => {
 		//loads user from backend once the screen loads
 		const bootstrapAsync = async () => {
 			await dispatch(loadUser(token));
+			await dispatch(getFoodLogs());
+			await dispatch(getDailyStats());
 		};
 
 		bootstrapAsync();

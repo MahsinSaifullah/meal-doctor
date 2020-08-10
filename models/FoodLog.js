@@ -35,7 +35,7 @@ const FoodLogSchema = mongoose.Schema({
 	awsImageKey: {
 		type: String,
 	},
-	timeToFinishMeal: {
+	mindfulness: {
 		type: Number,
 	},
 	calorie: {

@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
 	},
 	mealTitleText: {
 		fontFamily: Fonts.secondaryTitle,
-		fontSize: 22,
+		fontSize: 20,
 		color: Colors.accent,
 	},
 	mealSubtitleText: {
 		fontFamily: Fonts.secondaryTitle,
-		fontSize: 15,
+		fontSize: 12,
 		color: Colors.accentLight,
 	},
 	mealSubtitleValue: {

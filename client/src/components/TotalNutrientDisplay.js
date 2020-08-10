@@ -21,7 +21,7 @@ const TotalNutrientDisplay = ({
 			<View style={styles.totalCalorieCardContainer}>
 				<View>
 					<Text style={styles.totalCalorieValue}>
-						{totalCalories}
+						{totalCalories.toFixed(0)}
 						<Text style={styles.totalCalorieUnit}>kcal</Text>
 					</Text>
 				</View>

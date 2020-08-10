@@ -23,6 +23,7 @@ import {
 	clearMeasuringQuantity,
 	searchFoodLog,
 } from '../store/actions/detectionAction';
+import { addFoodLog } from '../store/actions/mealLogAction';
 
 const DetectedMealScreen = ({ navigation }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,12 +33,23 @@ const DetectedMealScreen = ({ navigation }) => {
 	);
 
 	const chosenMeal = useSelector((state) => state.detection.selectedMeal);
+
 	const selectedMeasuringUrl = useSelector(
 		(state) => state.detection.selectedMeasuringUrl
 	);
 	const selectedMeasuringUnit = useSelector(
 		(state) => state.detection.selectedMeasuringUnit
 	);
+
+	const chosenFoodLog = useSelector(
+		(state) => state.detection.foodLogDetectionResponse
+	);
+
+	const chosenMealType = useSelector((state) => state.mealLog.currentMealType);
+	const mindfulness = useSelector((state) => state.mealLog.mindfulness);
+	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
+	const awsImageUrl = useSelector((state) => state.detection.awsImageUrl);
+	const awsImageKey = useSelector((state) => state.detection.awsImageKey);
 
 	const dispatch = useDispatch();
 
@@ -55,8 +67,6 @@ const DetectedMealScreen = ({ navigation }) => {
 
 	// toggles the modal in track screen
 	const toggleModal = () => {
-		dispatch(clearMeasuringQuantity());
-		dispatch(clearMeasuringUnit());
 		setIsModalOpen(!isModalOpen);
 		setModalType('measurement');
 	};
@@ -69,14 +79,14 @@ const DetectedMealScreen = ({ navigation }) => {
 
 	//handle quantity confirmation
 	const onQuantitySelect = (quantity) => {
-		dispatch(addMeasuringQuantity(quantity));
+		dispatch(addMeasuringQuantity(Number(quantity)));
 
 		const data = {
 			mealName: chosenMeal.mealName,
 			edamamFoodId: chosenMeal.edamamFoodId,
 			edamamMeasuringUrl: selectedMeasuringUrl,
 			measuringUnit: selectedMeasuringUnit,
-			mealQuantity: parseInt(quantity),
+			mealQuantity: Number(quantity),
 		};
 
 		dispatch(searchFoodLog(data));
@@ -86,6 +96,40 @@ const DetectedMealScreen = ({ navigation }) => {
 	//handle skipping of mindful experience
 	const handleOnSkip = () => {
 		toggleModal();
+
+		const data = {
+			mealName: chosenFoodLog.mealName,
+			edamamFoodId: chosenFoodLog.edamamFoodId,
+			edamamMeasuringUrl: chosenFoodLog.edamamMeasuringUrl,
+			measuringUnit: chosenFoodLog.measuringUnit,
+			mealQuantity: chosenFoodLog.mealQuantity,
+			mealType: chosenMealType,
+			awsImageURL: awsImageUrl,
+			awsImageKey: awsImageKey,
+			mindfulness: mindfulness,
+			calorie: chosenFoodLog.calorie,
+			protein: chosenFoodLog.protein,
+			carb: chosenFoodLog.carb,
+			fat: chosenFoodLog.fat,
+			satFat: chosenFoodLog.satFat,
+			fiber: chosenFoodLog.fiber,
+			salt: chosenFoodLog.salt,
+			cholestrol: chosenFoodLog.cholestrol,
+			proteinParcentage: chosenFoodLog.proteinParcentage,
+			carbParcentage: chosenFoodLog.carbParcentage,
+			fatParcentage: chosenFoodLog.fatParcentage,
+			satFatParcentage: chosenFoodLog.satFatParcentage,
+			fiberParcentage: chosenFoodLog.fiberParcentage,
+			saltParcentage: chosenFoodLog.saltParcentage,
+			cholestrolParcentage: chosenFoodLog.cholestrolParcentage,
+			isHealthy: chosenFoodLog.isHealthy,
+			dietLabels: chosenFoodLog.dietLabels,
+			healthLabels: chosenFoodLog.healthLabels,
+			date: chosenDate,
+		};
+
+		dispatch(addFoodLog(data));
+
 		navigation.navigate('Track');
 	};
 

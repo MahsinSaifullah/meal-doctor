@@ -53,10 +53,10 @@ const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 							mealTime={
 								foodLog.timeToFinishMeal ? foodLog.timeToFinishMeal : '---'
 							}
-							mealCalories={foodLog.calorie}
-							fatParcentage={foodLog.fatParcentage}
-							satFatParcentage={foodLog.satFatParcentage}
-							saltParcentage={foodLog.saltParcentage}
+							mealCalories={foodLog.calorie.toFixed(0)}
+							fatParcentage={foodLog.fatParcentage.toFixed(0)}
+							satFatParcentage={foodLog.satFatParcentage.toFixed(0)}
+							saltParcentage={foodLog.saltParcentage.toFixed(0)}
 						/>
 					);
 				})}
