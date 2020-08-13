@@ -1,6 +1,5 @@
 import moment from 'moment';
 
-import { DAILYSTAT, FOODLOGS } from '../../../dummy/data/dummyData';
 import {
 	SET_DATE,
 	SET_CURRENTMEALTYPE,
@@ -8,6 +7,7 @@ import {
 	ADD_FOODLOG,
 	CLEAR_FOODLOG,
 	GET_DAILY_STATS,
+	SET_MINDFULNESS,
 } from '../types';
 
 const initialState = {
@@ -61,6 +61,11 @@ export default (state = initialState, action) => {
 				...state,
 				foodLogs: [],
 				dailyStats: [],
+			};
+		case SET_MINDFULNESS:
+			return {
+				...state,
+				mindfulness: action.payload,
 			};
 		default:
 			return state;

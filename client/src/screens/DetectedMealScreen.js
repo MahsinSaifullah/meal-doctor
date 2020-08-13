@@ -133,6 +133,11 @@ const DetectedMealScreen = ({ navigation }) => {
 		navigation.navigate('Track');
 	};
 
+	const handleOnYes = () => {
+		toggleModal();
+		navigation.navigate('Mindful Eating');
+	};
+
 	if (detectedMealList) {
 		if (detectedMealList.allPossibleFood.length > 0) {
 			return (
@@ -155,7 +160,10 @@ const DetectedMealScreen = ({ navigation }) => {
 								onConfirm={onQuantitySelect}
 							/>
 						) : (
-							<MindfulEatingPromptModal onSkip={handleOnSkip} />
+							<MindfulEatingPromptModal
+								onSkip={handleOnSkip}
+								onYes={handleOnYes}
+							/>
 						)}
 					</Modal>
 					<View style={styles.screenContainer}>

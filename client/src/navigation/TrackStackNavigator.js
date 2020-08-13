@@ -12,6 +12,7 @@ import IosHeaderConfig from '../constants/DefaultIOSHeaderConfig';
 import AndroidHeaderConfig from '../constants/DefaultAndroidHeaderConfig';
 import CustomHeaderButton from '../components/CustomHeaderButton';
 import Fonts from '../constants/Fonts';
+import Colors from '../constants/Colors';
 
 const Stack = createStackNavigator();
 
@@ -70,7 +71,17 @@ const TrackStackNavigator = (props) => {
 				options={{ headerShown: false }}
 				component={ImageDetectedScreen}
 			/>
-			<Stack.Screen name='Mindful Eating' component={MindfulEatingScreen} />
+			<Stack.Screen
+				name='Mindful Eating'
+				options={{
+					headerStyle: {
+						backgroundColor: Colors.primary,
+					},
+					headerTintColor: Colors.bgWhite,
+					headerTransparent: true,
+				}}
+				component={MindfulEatingScreen}
+			/>
 			<Stack.Screen name='Meal Timer' component={MealTimerScreen} />
 		</Stack.Navigator>
 	);

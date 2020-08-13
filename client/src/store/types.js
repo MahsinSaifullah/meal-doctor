@@ -25,3 +25,4 @@ export const GET_FOODLOGS = 'GET_FOODLOGS';
 export const ADD_FOODLOG = 'ADD_FOODLOG';
 export const CLEAR_FOODLOG = 'CLEAR_FOODLOG';
 export const GET_DAILY_STATS = 'GET_DAILY_STATS';
+export const SET_MINDFULNESS = 'SET_MINDFULNESS';

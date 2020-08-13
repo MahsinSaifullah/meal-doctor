@@ -17,6 +17,7 @@ const FoodLogItem = ({
 	saltParcentage,
 }) => {
 	// conditional rendering to implement traffic light labels
+
 	let bgColorForFat = Colors.primary;
 	if (fatParcentage >= 20) {
 		bgColorForFat = Colors.trafficRed;

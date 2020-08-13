@@ -7,6 +7,7 @@ import {
 	ADD_FOODLOG,
 	CLEAR_FOODLOG,
 	GET_DAILY_STATS,
+	SET_MINDFULNESS,
 } from '../types';
 import ServerURL from '../../constants/ServerURL';
 
@@ -75,4 +76,11 @@ export const getDailyStats = () => async (dispatch) => {
 		console.log(err.message);
 		throw new Error(error.response.data);
 	}
+};
+
+export const setMindfulness = (mindfulness) => {
+	return {
+		type: SET_MINDFULNESS,
+		payload: mindfulness,
+	};
 };

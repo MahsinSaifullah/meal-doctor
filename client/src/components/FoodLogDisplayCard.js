@@ -50,9 +50,7 @@ const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 							mealName={foodLog.mealName}
 							mealQuantity={foodLog.mealQuantity}
 							mealMeasureUnit={foodLog.measuringUnit}
-							mealTime={
-								foodLog.timeToFinishMeal ? foodLog.timeToFinishMeal : '---'
-							}
+							mealTime={foodLog.mindfulness ? foodLog.mindfulness : '---'}
 							mealCalories={foodLog.calorie.toFixed(0)}
 							fatParcentage={foodLog.fatParcentage.toFixed(0)}
 							satFatParcentage={foodLog.satFatParcentage.toFixed(0)}

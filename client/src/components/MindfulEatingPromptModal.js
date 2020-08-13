@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 import styles from '../styles/component/MindfulEatingPromptStyles';
 import Colors from '../constants/Colors';
 
-const MindfulEatingPrompt = ({ onMindulEating, onSkip }) => {
+const MindfulEatingPrompt = ({ onYes, onSkip }) => {
 	return (
 		<View style={styles.modalContainer}>
 			<Animatable.View style={styles.modalCard} animation='fadeInDown'>
@@ -21,7 +21,7 @@ const MindfulEatingPrompt = ({ onMindulEating, onSkip }) => {
 						type='solid'
 						raised={true}
 						titleStyle={styles.buttonText}
-						onPress={onMindulEating}
+						onPress={onYes}
 					/>
 					<Button
 						containerStyle={styles.buttonContainer}
