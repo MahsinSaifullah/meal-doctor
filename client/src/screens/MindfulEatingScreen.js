@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { useDispatch, useSelector } from 'react-redux';
+import { Audio } from 'expo-av';
+import { useFocusEffect } from '@react-navigation/native';
 
 import styles from '../styles/screen/MindfulEatingScreenStyles';
 import Colors from '../constants/Colors';
 import calculateMindfulness from '../utility/calculateMindfulness';
 import { setMindfulness, addFoodLog } from '../store/actions/mealLogAction';
+import Player from '../utility/Player';
 
 const MindfulEatingScreen = ({ navigation }) => {
 	const [displayItem, setDisplayItem] = useState('start');
@@ -25,32 +28,41 @@ const MindfulEatingScreen = ({ navigation }) => {
 
 	const dispatch = useDispatch();
 
-	const onStart = () => {
+	const onStart = async () => {
+		Player.playSound('track1');
 		setStartTime(Date.now());
 		setDisplayItem('step1');
 	};
 
-	const onMoveOn = () => {
+	const onMoveOn = async () => {
+		Player.stopSound('track1');
+		Player.playSound('track2');
 		setDisplayItem('step2');
 	};
 
-	const onNext = () => {
+	const onNext = async () => {
+		Player.stopSound('track2');
+		Player.playSound('track3');
 		setDisplayItem('step3');
 	};
 
-	const onContinue = () => {
+	const onContinue = async () => {
+		Player.stopSound('track3');
+		Player.playSound('track4');
 		setDisplayItem('step4');
 	};
 
-	const onWrapUp = () => {
+	const onWrapUp = async () => {
+		Player.stopSound('track4');
 		setDisplayItem('end');
 	};
 
-	const onRepeat = () => {
+	const onRepeat = async () => {
 		setDisplayItem('step2');
+		Player.playSound('track2');
 	};
 
-	const onFinish = () => {
+	const onFinish = async () => {
 		setEndTime(Date.now());
 		const mindfulnessScore = calculateMindfulness(startTime, Date.now(), 10);
 
@@ -90,6 +102,51 @@ const MindfulEatingScreen = ({ navigation }) => {
 		dispatch(addFoodLog(data));
 		navigation.navigate('Track');
 	};
+
+	useEffect(() => {
+		const bootstrapAsync = async () => {
+			await Audio.setAudioModeAsync({
+				allowsRecordingIOS: false,
+				interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+				playsInSilentModeIOS: true,
+				interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+				shouldDuckAndroid: true,
+				staysActiveInBackground: true,
+				playThroughEarpieceAndroid: true,
+			});
+		};
+		Player.stopSound('track1');
+		Player.stopSound('track2');
+		Player.stopSound('track3');
+		Player.stopSound('track4');
+
+		bootstrapAsync();
+	}, []);
+
+	useFocusEffect(() => {
+		return () => {
+			if (displayItem === 'start') {
+				Player.stopSound('track2');
+				Player.stopSound('track3');
+				Player.stopSound('track4');
+			} else if (displayItem === 'step1') {
+				Player.stopSound('track1');
+				Player.stopSound('track3');
+				Player.stopSound('track4');
+			} else if (displayItem === 'step2') {
+				Player.stopSound('track1');
+				Player.stopSound('track2');
+				Player.stopSound('track4');
+			} else if (displayItem === 'step3') {
+				Player.stopSound('track1');
+				Player.stopSound('track2');
+				Player.stopSound('track3');
+			} else {
+				Player.stopSound('track3');
+				Player.stopSound('track4');
+			}
+		};
+	}, []);
 
 	if (displayItem === 'start')
 		return (

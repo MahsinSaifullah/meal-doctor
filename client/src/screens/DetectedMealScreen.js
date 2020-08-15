@@ -18,9 +18,7 @@ import {
 	selectMeal,
 	clearSelectedMeal,
 	addMeasuringUnit,
-	clearMeasuringUnit,
 	addMeasuringQuantity,
-	clearMeasuringQuantity,
 	searchFoodLog,
 } from '../store/actions/detectionAction';
 import { addFoodLog } from '../store/actions/mealLogAction';
