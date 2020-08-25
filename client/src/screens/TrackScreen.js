@@ -24,6 +24,7 @@ import {
 	setCurrentMealType,
 	getFoodLogs,
 	getDailyStats,
+	deleteFoodLog,
 } from '../store/actions/mealLogAction';
 import {
 	searchMealCalories,
@@ -36,6 +37,7 @@ import Loading from '../components/Loading';
 import SearchTypeModal from '../components/SearchTypeModal';
 import ManualSearchInputModal from '../components/ManualSearchInputModal';
 import VisionSearchModal from '../components/VisionSearchModal';
+import FoodLogDeleteModal from '../components/FoodLogDeleteModal';
 
 const TrackScreen = ({ navigation }) => {
 	const token = useSelector((state) => state.auth.token);
@@ -44,6 +46,7 @@ const TrackScreen = ({ navigation }) => {
 	const [modalType, setModalType] = useState('manualOrVision');
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [isSearchTypeModalOpen, setIsSearchTypeModalOpen] = useState(false);
+	const [foodLogToDelete, setFoodLogToDelete] = useState('');
 	const dailyStat = useSelector((state) =>
 		state.mealLog.dailyStats.find((dailyStat) => {
 			const isDateMatch = moment(dailyStat.date, 'DD MMMM YYYY').isSame(
@@ -96,11 +99,13 @@ const TrackScreen = ({ navigation }) => {
 
 	// handles manual search button press on  manualOrVision modal
 	const handleOnManualSearch = () => {
+		dispatch(clearImageDetection());
 		setModalType('manualSearch');
 	};
 
 	// handles vision search button press on manualOrVision modal
 	const handleOnVisionSearch = () => {
+		dispatch(clearImageDetection());
 		setModalType('visionSearch');
 	};
 
@@ -186,6 +191,19 @@ const TrackScreen = ({ navigation }) => {
 		}
 	};
 
+	// handles long press on foodlog item
+	const handleOnLongPress = (id) => {
+		toggleModal();
+		setModalType('deleteFoodLog');
+		setFoodLogToDelete(id);
+	};
+
+	const handleFoodLogDelete = () => {
+		dispatch(deleteFoodLog(foodLogToDelete));
+		setFoodLogToDelete('');
+		toggleModal();
+	};
+
 	if (user) {
 		return (
 			<View style={styles.screenContent}>
@@ -211,10 +229,15 @@ const TrackScreen = ({ navigation }) => {
 								onCancel={toggleModal}
 								onSearch={handleOnMealSearch}
 							/>
-						) : (
+						) : modalType === 'visionSearch' ? (
 							<VisionSearchModal
 								onPhoto={handleOnPhoto}
 								onCameraRoll={handleOnCameraRoll}
+							/>
+						) : (
+							<FoodLogDeleteModal
+								onYes={handleFoodLogDelete}
+								onCancel={toggleModal}
 							/>
 						)}
 					</Modal>
@@ -261,10 +284,26 @@ const TrackScreen = ({ navigation }) => {
 							/>
 						</View>
 						<View style={styles.foodLogDisplayContainer}>
-							<FoodLogDisplay mealType='breakfast' onAdd={handleMealAdd} />
-							<FoodLogDisplay mealType='lunch' onAdd={handleMealAdd} />
-							<FoodLogDisplay mealType='dinner' onAdd={handleMealAdd} />
-							<FoodLogDisplay mealType='snacks' onAdd={handleMealAdd} />
+							<FoodLogDisplay
+								mealType='breakfast'
+								onAdd={handleMealAdd}
+								onLongPress={handleOnLongPress}
+							/>
+							<FoodLogDisplay
+								mealType='lunch'
+								onAdd={handleMealAdd}
+								onLongPress={handleOnLongPress}
+							/>
+							<FoodLogDisplay
+								mealType='dinner'
+								onAdd={handleMealAdd}
+								onLongPress={handleOnLongPress}
+							/>
+							<FoodLogDisplay
+								mealType='snacks'
+								onAdd={handleMealAdd}
+								onLongPress={handleOnLongPress}
+							/>
 						</View>
 					</ScrollView>
 				</ImageBackground>

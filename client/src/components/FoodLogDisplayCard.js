@@ -7,7 +7,7 @@ import moment from 'moment';
 import styles from '../styles/component/FoodLogDisplayCardStyles';
 import FoodLogItem from './FoodLogItem';
 
-const FoodLogDisplayCard = ({ mealType, onAdd }) => {
+const FoodLogDisplayCard = ({ mealType, onAdd, onLongPress }) => {
 	const chosenDate = useSelector((state) => state.mealLog.chosenDate);
 	const displayedFoodLogs = useSelector((state) =>
 		state.mealLog.foodLogs.filter((foodLog) => {
@@ -21,6 +21,7 @@ const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 			return isMealTypeMatch && isDateMatch;
 		})
 	);
+
 	return (
 		<View style={styles.componentContainer}>
 			<View style={styles.componentHeaderContainer}>
@@ -42,6 +43,7 @@ const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 					return (
 						<FoodLogItem
 							key={foodLog.edamamFoodId}
+							id={foodLog._id}
 							mealUri={
 								foodLog.awsImageURL
 									? foodLog.awsImageURL
@@ -50,11 +52,12 @@ const FoodLogDisplayCard = ({ mealType, onAdd }) => {
 							mealName={foodLog.mealName}
 							mealQuantity={foodLog.mealQuantity}
 							mealMeasureUnit={foodLog.measuringUnit}
-							mealTime={foodLog.mindfulness ? foodLog.mindfulness : '---'}
+							mealTime={foodLog.mindfulness ? foodLog.mindfulness : 0}
 							mealCalories={foodLog.calorie.toFixed(0)}
 							fatParcentage={foodLog.fatParcentage.toFixed(0)}
 							satFatParcentage={foodLog.satFatParcentage.toFixed(0)}
 							saltParcentage={foodLog.saltParcentage.toFixed(0)}
+							onLongPress={onLongPress}
 						/>
 					);
 				})}

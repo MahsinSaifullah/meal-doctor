@@ -8,6 +8,8 @@ import {
 	CLEAR_FOODLOG,
 	GET_DAILY_STATS,
 	SET_MINDFULNESS,
+	CLEAR_MINDFULNESS,
+	DELETE_FOODLOG,
 } from '../types';
 import ServerURL from '../../constants/ServerURL';
 
@@ -83,4 +85,20 @@ export const setMindfulness = (mindfulness) => {
 		type: SET_MINDFULNESS,
 		payload: mindfulness,
 	};
+};
+
+export const clearMindfulness = () => {
+	return {
+		type: CLEAR_MINDFULNESS,
+	};
+};
+
+export const deleteFoodLog = (id) => async (dispatch) => {
+	try {
+		await axios.delete(`${ServerURL.devServer}/api/foodlog/${id}`);
+		dispatch({ type: DELETE_FOODLOG, payload: id });
+	} catch (err) {
+		console.log(err.message);
+		throw new Error(error.response.data);
+	}
 };

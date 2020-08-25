@@ -191,7 +191,7 @@ router.delete('/:id', auth, async (req, res) => {
 		if (foodlog.user.toString() !== req.user.id)
 			return res.status(401).json({ msg: 'Not Authorized' });
 
-		const foodLogDate = moment(foodlog.date).format('MMMM Do YYYY');
+		const foodLogDate = moment(foodlog.date).format('DD MMMM YYYY');
 
 		let dailyStat = await DailyStat.findOne({
 			user: foodlog.user,
@@ -228,7 +228,7 @@ router.delete('/:id', auth, async (req, res) => {
 
 				await dailyStat.save();
 			} else {
-				await DailyStat.findByIdAndRemove(dailyStat.id);
+				await DailyStat.findByIdAndRemove(dailyStat._id);
 			}
 		}
 

@@ -26,16 +26,6 @@ const MealTabNavigator = () => {
 				}}
 				component={TrackStackNavigator}
 			/>
-			<Tab.Screen
-				name='Progress'
-				options={{
-					tabBarIcon: ({ color }) => {
-						return <FontAwesome name='pie-chart' size={25} color={color} />;
-					},
-					tabBarColor: Colors.accent,
-				}}
-				component={ProgressStackNavigator}
-			/>
 
 			<Tab.Screen
 				name='Profile'

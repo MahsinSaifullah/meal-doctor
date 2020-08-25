@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Avatar } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
 
 import styles from '../styles/component/FoodLogItemStyles';
 import Colors from '../constants/Colors';
+import { getDailyStats } from '../store/actions/mealLogAction';
 
 const FoodLogItem = ({
+	id,
 	mealUri,
 	mealName,
 	mealQuantity,
@@ -15,6 +18,7 @@ const FoodLogItem = ({
 	fatParcentage,
 	satFatParcentage,
 	saltParcentage,
+	onLongPress,
 }) => {
 	// conditional rendering to implement traffic light labels
 
@@ -36,8 +40,16 @@ const FoodLogItem = ({
 		if (saltParcentage > 20) saltParcentage = '>20';
 	} else if (saltParcentage >= 10) bgColorForSalt = Colors.trafficYellow;
 
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		return () => {
+			dispatch(getDailyStats());
+		};
+	}, []);
+
 	return (
-		<TouchableOpacity>
+		<TouchableOpacity onLongPress={() => onLongPress(id)}>
 			<View style={styles.componentContainer}>
 				<Avatar
 					size='medium'

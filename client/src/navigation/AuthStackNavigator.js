@@ -27,7 +27,6 @@ const LandingStackNavigator = (props) => {
 		};
 
 		bootstrapAsync();
-		// removeTokenFromStorage();
 	}, []);
 
 	return (

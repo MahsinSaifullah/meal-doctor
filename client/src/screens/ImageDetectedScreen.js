@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	View,
 	Text,
@@ -20,6 +20,7 @@ import ManualSearchInputModal from '../components/ManualSearchInputModal';
 import {
 	searchMealCalories,
 	clearMealCalories,
+	clearImageDetection,
 } from '../store/actions/detectionAction';
 
 const ImageDetectedScreen = ({ navigation }) => {
@@ -55,6 +56,12 @@ const ImageDetectedScreen = ({ navigation }) => {
 		dispatch(searchMealCalories(label));
 		navigation.navigate('Detected Meal', { mealName: label });
 	};
+
+	useEffect(() => {
+		return () => {
+			dispatch(clearImageDetection());
+		};
+	}, []);
 
 	if (labels.length > 0) {
 		return (

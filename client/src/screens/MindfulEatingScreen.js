@@ -10,6 +10,7 @@ import styles from '../styles/screen/MindfulEatingScreenStyles';
 import Colors from '../constants/Colors';
 import calculateMindfulness from '../utility/calculateMindfulness';
 import { setMindfulness, addFoodLog } from '../store/actions/mealLogAction';
+import { clearImageDetection } from '../store/actions/detectionAction';
 import Player from '../utility/Player';
 
 const MindfulEatingScreen = ({ navigation }) => {
@@ -100,6 +101,7 @@ const MindfulEatingScreen = ({ navigation }) => {
 		};
 
 		dispatch(addFoodLog(data));
+		dispatch(clearImageDetection());
 		navigation.navigate('Track');
 	};
 

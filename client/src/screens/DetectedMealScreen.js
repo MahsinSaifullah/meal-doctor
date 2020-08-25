@@ -20,8 +20,9 @@ import {
 	addMeasuringUnit,
 	addMeasuringQuantity,
 	searchFoodLog,
+	clearImageDetection,
 } from '../store/actions/detectionAction';
-import { addFoodLog } from '../store/actions/mealLogAction';
+import { addFoodLog, clearMindfulness } from '../store/actions/mealLogAction';
 
 const DetectedMealScreen = ({ navigation }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -93,6 +94,7 @@ const DetectedMealScreen = ({ navigation }) => {
 
 	//handle skipping of mindful experience
 	const handleOnSkip = () => {
+		dispatch(clearMindfulness());
 		toggleModal();
 
 		const data = {
@@ -104,7 +106,7 @@ const DetectedMealScreen = ({ navigation }) => {
 			mealType: chosenMealType,
 			awsImageURL: awsImageUrl,
 			awsImageKey: awsImageKey,
-			mindfulness: mindfulness,
+			mindfulness: 0,
 			calorie: chosenFoodLog.calorie,
 			protein: chosenFoodLog.protein,
 			carb: chosenFoodLog.carb,
@@ -127,7 +129,7 @@ const DetectedMealScreen = ({ navigation }) => {
 		};
 
 		dispatch(addFoodLog(data));
-
+		dispatch(clearImageDetection());
 		navigation.navigate('Track');
 	};
 
