@@ -87,9 +87,17 @@ const DetectedMealScreen = ({ navigation }) => {
 			measuringUnit: selectedMeasuringUnit,
 			mealQuantity: Number(quantity),
 		};
-
-		dispatch(searchFoodLog(data));
-		setModalType('mindful');
+		try {
+			dispatch(searchFoodLog(data));
+			setModalType('mindful');
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	//handle skipping of mindful experience

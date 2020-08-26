@@ -63,9 +63,18 @@ const TrackScreen = ({ navigation }) => {
 	useEffect(() => {
 		//loads user from backend once the screen loads
 		const bootstrapAsync = async () => {
-			await dispatch(loadUser(token));
-			await dispatch(getFoodLogs());
-			await dispatch(getDailyStats());
+			try {
+				await dispatch(loadUser(token));
+				await dispatch(getFoodLogs());
+				await dispatch(getDailyStats());
+			} catch (err) {
+				Alert.alert('Sorry!!', err.message, [
+					{
+						text: 'Try Again',
+						onPress: () => {},
+					},
+				]);
+			}
 		};
 
 		bootstrapAsync();
@@ -116,9 +125,18 @@ const TrackScreen = ({ navigation }) => {
 		dispatch(clearMealCalories());
 
 		// add meal calorie response in detection reducer
-		dispatch(searchMealCalories(mealName));
-		toggleModal();
-		navigation.navigate('Detected Meal', { mealName: mealName });
+		try {
+			dispatch(searchMealCalories(mealName));
+			toggleModal();
+			navigation.navigate('Detected Meal', { mealName: mealName });
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	// get user permission to use Native features
@@ -163,8 +181,17 @@ const TrackScreen = ({ navigation }) => {
 		if (!image.cancelled) {
 			dispatch(clearImageDetection());
 			toggleModal();
-			dispatch(detectImage(image));
-			navigation.navigate('Image Detect');
+			try {
+				dispatch(detectImage(image));
+				navigation.navigate('Image Detect');
+			} catch (err) {
+				Alert.alert('Sorry!!', err.message, [
+					{
+						text: 'Try Again',
+						onPress: () => {},
+					},
+				]);
+			}
 		}
 	};
 
@@ -186,8 +213,17 @@ const TrackScreen = ({ navigation }) => {
 		if (!image.cancelled) {
 			dispatch(clearImageDetection());
 			toggleModal();
-			dispatch(detectImage(image));
-			navigation.navigate('Image Detect');
+			try {
+				dispatch(detectImage(image));
+				navigation.navigate('Image Detect');
+			} catch (err) {
+				Alert.alert('Sorry!!', err.message, [
+					{
+						text: 'Try Again',
+						onPress: () => {},
+					},
+				]);
+			}
 		}
 	};
 
@@ -199,9 +235,18 @@ const TrackScreen = ({ navigation }) => {
 	};
 
 	const handleFoodLogDelete = () => {
-		dispatch(deleteFoodLog(foodLogToDelete));
-		setFoodLogToDelete('');
-		toggleModal();
+		try {
+			dispatch(deleteFoodLog(foodLogToDelete));
+			setFoodLogToDelete('');
+			toggleModal();
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	if (user) {
@@ -241,7 +286,7 @@ const TrackScreen = ({ navigation }) => {
 							/>
 						)}
 					</Modal>
-					<ScrollView>
+					<ScrollView showsVerticalScrollIndicator={false}>
 						<View style={styles.dateDisplayContainer}>
 							<TouchableOpacity
 								onPress={() => setShowDatePicker(true)}

@@ -104,7 +104,7 @@ export const login = (formData) => async (dispatch) => {
 };
 
 // logout
-export const logout = async () => {
+export const logout = () => {
 	removeTokenFromStorage();
 	return {
 		type: LOGOUT,

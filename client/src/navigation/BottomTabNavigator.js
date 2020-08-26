@@ -3,8 +3,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 
 import TrackStackNavigator from './TrackStackNavigator';
-import ProgressStackNavigator from './ProgressStackNavigator';
-import MealsScreen from '../screens/MealsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import Colors from '../constants/Colors';
 const Tab = createMaterialBottomTabNavigator();
@@ -33,7 +31,7 @@ const MealTabNavigator = () => {
 					tabBarIcon: ({ color }) => {
 						return <FontAwesome name='user' size={25} color={color} />;
 					},
-					tabBarColor: Colors.primary,
+					tabBarColor: Colors.accent,
 				}}
 				component={ProfileScreen}
 			/>

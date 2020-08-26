@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-	View,
-	Text,
-	ImageBackground,
-	TouchableOpacity,
-	ScrollView,
-} from 'react-native';
+import { View, Text, ImageBackground, ScrollView, Alert } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Feather } from '@expo/vector-icons';
 import { Button } from 'react-native-elements';
@@ -42,9 +36,18 @@ const ImageDetectedScreen = ({ navigation }) => {
 		dispatch(clearMealCalories());
 
 		// add meal calorie response in detection reducer
-		dispatch(searchMealCalories(mealName));
-		toggleModal();
-		navigation.navigate('Detected Meal', { mealName: mealName });
+		try {
+			dispatch(searchMealCalories(mealName));
+			toggleModal();
+			navigation.navigate('Detected Meal', { mealName: mealName });
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	// handle selected label press from image detection
@@ -53,8 +56,17 @@ const ImageDetectedScreen = ({ navigation }) => {
 		dispatch(clearMealCalories());
 
 		// add meal calorie response in detection reducer
-		dispatch(searchMealCalories(label));
-		navigation.navigate('Detected Meal', { mealName: label });
+		try {
+			dispatch(searchMealCalories(label));
+			navigation.navigate('Detected Meal', { mealName: label });
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	useEffect(() => {

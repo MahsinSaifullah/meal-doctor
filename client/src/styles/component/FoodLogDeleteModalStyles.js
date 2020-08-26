@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 	},
 	modalText: {
 		fontFamily: Fonts.mainTitleFont,
-		fontSize: 28,
+		fontSize: 25,
 		color: Colors.accent,
 	},
 	modalButtonContainer: {

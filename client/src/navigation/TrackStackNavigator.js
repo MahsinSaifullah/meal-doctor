@@ -1,5 +1,4 @@
 import React from 'react';
-import { Platform } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -7,7 +6,6 @@ import TrackScreen from '../screens/TrackScreen';
 import MindfulEatingScreen from '../screens/MindfulEatingScreen';
 import DetectedMealScreen from '../screens/DetectedMealScreen';
 import ImageDetectedScreen from '../screens/ImageDetectedScreen';
-import MealTimerScreen from '../screens/MealTimerScreen';
 import IosHeaderConfig from '../constants/DefaultIOSHeaderConfig';
 import AndroidHeaderConfig from '../constants/DefaultAndroidHeaderConfig';
 import CustomHeaderButton from '../components/CustomHeaderButton';
@@ -82,7 +80,6 @@ const TrackStackNavigator = (props) => {
 				}}
 				component={MindfulEatingScreen}
 			/>
-			<Stack.Screen name='Meal Timer' component={MealTimerScreen} />
 		</Stack.Navigator>
 	);
 };

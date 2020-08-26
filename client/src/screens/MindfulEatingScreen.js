@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,9 +100,18 @@ const MindfulEatingScreen = ({ navigation }) => {
 			date: chosenDate,
 		};
 
-		dispatch(addFoodLog(data));
-		dispatch(clearImageDetection());
-		navigation.navigate('Track');
+		try {
+			dispatch(addFoodLog(data));
+			dispatch(clearImageDetection());
+			navigation.navigate('Track');
+		} catch (err) {
+			Alert.alert('Sorry!!', err.message, [
+				{
+					text: 'Try Again',
+					onPress: () => {},
+				},
+			]);
+		}
 	};
 
 	useEffect(() => {

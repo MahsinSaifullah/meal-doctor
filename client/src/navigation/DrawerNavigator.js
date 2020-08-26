@@ -2,15 +2,19 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import BottomTabNavigator from './BottomTabNavigator';
-import AboutScreen from '../screens/AboutScreen';
+import AboutStackNavigator from './AboutStackNavigator';
+import CustomDrawer from '../components/CustomDrawer';
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
 	return (
-		<Drawer.Navigator initialRouteName='Home'>
+		<Drawer.Navigator
+			initialRouteName='Home'
+			drawerContent={(props) => <CustomDrawer {...props} />}
+		>
 			<Drawer.Screen name='Home' component={BottomTabNavigator} />
-			<Drawer.Screen name='About' component={AboutScreen} />
+			<Drawer.Screen name='About' component={AboutStackNavigator} />
 		</Drawer.Navigator>
 	);
 };
