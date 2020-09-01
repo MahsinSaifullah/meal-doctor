@@ -1,3 +1,3 @@
 export default {
-	devServer: 'http://bfc7d5f18a69.ngrok.io',
+	devServer: 'https://secret-peak-90434.herokuapp.com',
 };
