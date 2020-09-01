@@ -18,15 +18,6 @@ const FoodLogDeleteModal = ({ onYes, onCancel }) => {
 				<View style={styles.modalButtonContainer}>
 					<Button
 						containerStyle={styles.buttonContainer}
-						buttonStyle={styles.button}
-						title='Yes'
-						type='solid'
-						raised={true}
-						titleStyle={styles.buttonText}
-						onPress={onYes}
-					/>
-					<Button
-						containerStyle={styles.buttonContainer}
 						buttonStyle={{
 							...styles.button,
 							backgroundColor: Colors.trafficRed,
@@ -36,6 +27,15 @@ const FoodLogDeleteModal = ({ onYes, onCancel }) => {
 						raised={true}
 						titleStyle={styles.buttonText}
 						onPress={onCancel}
+					/>
+					<Button
+						containerStyle={styles.buttonContainer}
+						buttonStyle={styles.button}
+						title='Yes'
+						type='solid'
+						raised={true}
+						titleStyle={styles.buttonText}
+						onPress={onYes}
 					/>
 				</View>
 			</Animatable.View>

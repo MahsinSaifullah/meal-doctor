@@ -136,6 +136,7 @@ const LoginScreen = ({ navigation }) => {
 								placeholder='Enter your Email'
 								style={styles.textInput}
 								autoCapitalize='none'
+								autoCompleteType='off'
 								onChangeText={(value) => handleEmailInputChange(value)}
 								onEndEditing={handleEndEditing}
 							/>
@@ -163,6 +164,7 @@ const LoginScreen = ({ navigation }) => {
 								placeholder='Enter your Password'
 								style={styles.textInput}
 								autoCapitalize='none'
+								autoCompleteType='off'
 								onChangeText={(value) => handlePasswordInputChange(value)}
 								secureTextEntry={inputData.secureTextEntry}
 							/>

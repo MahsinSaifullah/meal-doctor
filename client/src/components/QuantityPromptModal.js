@@ -35,15 +35,6 @@ const QuantityPromptModal = ({ onConfirm, onCancel }) => {
 				<View style={styles.modalButtonContainer}>
 					<Button
 						containerStyle={styles.buttonContainer}
-						buttonStyle={styles.button}
-						title='Confirm'
-						type='solid'
-						raised={true}
-						titleStyle={styles.buttonText}
-						onPress={() => onConfirm(input)}
-					/>
-					<Button
-						containerStyle={styles.buttonContainer}
 						buttonStyle={{
 							...styles.button,
 							backgroundColor: Colors.trafficRed,
@@ -53,6 +44,17 @@ const QuantityPromptModal = ({ onConfirm, onCancel }) => {
 						raised={true}
 						titleStyle={styles.buttonText}
 						onPress={onCancel}
+					/>
+					<Button
+						containerStyle={styles.buttonContainer}
+						buttonStyle={styles.button}
+						title='Confirm'
+						type='solid'
+						raised={true}
+						titleStyle={styles.buttonText}
+						onPress={() => {
+							if (input) onConfirm(input);
+						}}
 					/>
 				</View>
 			</Animatable.View>

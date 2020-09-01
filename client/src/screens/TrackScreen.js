@@ -258,7 +258,6 @@ const TrackScreen = ({ navigation }) => {
 				>
 					<Modal
 						isVisible={isSearchTypeModalOpen}
-						onBackdropPress={toggleModal}
 						hideModalContentWhileAnimating={true}
 						onSwipeComplete={toggleModal}
 						swipeThreshold={20}

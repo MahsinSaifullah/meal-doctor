@@ -27,15 +27,6 @@ const ManualSearchInputModal = ({ onSearch, onCancel }) => {
 				<View style={styles.modalButtonContainer}>
 					<Button
 						containerStyle={styles.buttonContainer}
-						buttonStyle={styles.button}
-						title='Search'
-						type='solid'
-						raised={true}
-						titleStyle={styles.buttonText}
-						onPress={() => onSearch(input)}
-					/>
-					<Button
-						containerStyle={styles.buttonContainer}
 						buttonStyle={{
 							...styles.button,
 							backgroundColor: Colors.trafficRed,
@@ -45,6 +36,17 @@ const ManualSearchInputModal = ({ onSearch, onCancel }) => {
 						raised={true}
 						titleStyle={styles.buttonText}
 						onPress={onCancel}
+					/>
+					<Button
+						containerStyle={styles.buttonContainer}
+						buttonStyle={styles.button}
+						title='Search'
+						type='solid'
+						raised={true}
+						titleStyle={styles.buttonText}
+						onPress={() => {
+							if (input) onSearch(input);
+						}}
 					/>
 				</View>
 			</Animatable.View>

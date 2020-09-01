@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	modalCard: {
-		height: screenHeight >= 800 ? '40%' : '50%',
+		height: screenHeight >= 800 ? '50%' : '60%',
 		width: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
