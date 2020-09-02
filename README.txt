@@ -13,4 +13,8 @@ There are quite a few steps that need to be followed.
 -> Now open the meal-doctor folder in any code editor, like VS code or Atom.
 -> Open the file /client/src/constants/ServerURL.js
 -> change devServer to the new forwading link.
--> Open a new terminal 
+-> Open a new terminal cd into the meal-doctor/client directory and run 'npm start' (you will be to see a QR code, keep it running as well)
+-> Now to test the app in a real phone, download the expo client app from the App Store. -> Scan the QR code from the terminal.
+-> The app should be loaded onto the phone and can be tested.
+-> if you have Xcode installed, just pressing 'i' will open the IOS simulator.
+-> pressing 'a' will open the Android Simulator, if Android Studio emulator is setup

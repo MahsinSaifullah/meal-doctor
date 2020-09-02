@@ -1,3 +1,3 @@
 export default {
-	devServer: 'https://meal-doctor.herokuapp.com',
+	devServer: 'http://43a482bed45a.ngrok.io',
 };
